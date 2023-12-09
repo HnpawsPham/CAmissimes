@@ -1,0 +1,218 @@
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-attachment: fixed;
+}
+/* colors */
+.youngGreen{
+    background-color: #4F6F52;
+}
+.oldRed{
+    background-color: #9A4444;
+}
+.dwhite{
+    background-color: rgb(227, 227, 227);
+}
+.yellowishWhite{
+    background-color: #FEFAE0;
+}
+.white{
+    background-color: rgb(255, 255, 255);
+}
+.darkgrey{
+    background-color: rgb(32, 32, 32);
+}
+.whiteText{
+    color: white;
+}
+.blackText{
+    color: rgb(0, 0, 0);
+}
+.woody{
+    background-color: rgb(239, 219, 199);
+}
+.monochrome{
+    background-color: rgb(4, 13, 19);
+}
+.freshCyan{
+    background-color: #EEF5FF;
+}
+.cherryRed{
+    background-color: #e31e25;
+}
+.teal{
+    background-color: #00ABB3;
+}
+.melonYellow{
+    background-color: #ECF4D6;
+}
+.waterColor{
+    background-color: rgba(180, 239, 255, 0.712);
+}
+@font-face {
+    font-family: handlee;
+    src: url(../fonts/Handlee-Regular.ttf);
+}
+@font-face {
+    font-family: sastify;
+    src: url(../fonts/Satisfy-Regular.ttf);
+}
+@font-face {
+    font-family: zeyada;
+    src: url(../fonts/Zeyada-Regular.ttf);
+}
+@font-face {
+    font-family: kaushan;
+    src: url(../fonts/KaushanScript-Regular.ttf);
+}
+@font-face {
+    font-family: zatiyan;
+    src: url(../fonts/SVN-Zatiyan.otf);
+}
+@font-face {
+    font-family: spline;
+    src: url(../fonts/SplineSansMono-Regular.ttf);
+}
+@font-face {
+    font-family: hanoi;
+    src: url(../fonts/LHanoienne.otf);
+}
+@font-face {
+    font-family: yerington;
+    src: url(../fonts/mtd/MTD\ Yerington.otf);
+}
+@font-face {
+    font-family:arthington ;
+    src: url(../fonts/mtd/MTD\ Arthington.otf);
+}
+@font-face {
+    font-family: engraved;
+    src: url(../fonts/mtd/HP\ Monstice\ Engraved.otf);
+}
+@font-face {
+    font-family: gothic;
+    src: url(../fonts/mtd/MTD\ Black\ Baron\ Gothic.otf);
+}
+@font-face {
+    font-family: dartangnon;
+    src: url(../fonts/mtd/MTD\ Dartangnon\ ITC.otf);
+}
+@font-face {
+    font-family: hole;
+    src: url(../fonts/mtd/MTD\ Brownstone\ Sans\ Hole.otf);
+}
+@font-face {
+    font-family: goodwater;
+    src: url(../fonts/mtd/MTD\ VVD\ Golden\ Horn\ Pressed.otf);
+}
+@font-face {
+    font-family: eleganto;
+    src: url(../fonts/OTF/ElegantoSans-Regular.otf);
+}
+@font-face {
+    font-family: gabo;
+    src: url(../fonts/Gabo___Free_Elegant_Font_by_Dannci.otf);
+}
+@font-face {
+    font-family: shadow;
+    src: url(../fonts/ShadowsIntoLight-Regular.ttf);
+}
+@font-face {
+    font-family: rocksalt;
+    src: url(../fonts/RockSalt-Regular.ttf);
+}
+@font-face {
+    font-family: loveya;
+    src: url(../fonts/LoveYaLikeASister-Regular.ttf);
+}
+/* icons */
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+::selection{
+    opacity: 0;
+}
+#text{
+    max-height: 30vh;
+    overflow-y: scroll;
+    z-index: 5;
+    padding: 5px 20px;
+    top: 30px;
+    visibility: hidden;
+    left: 290px;
+    font-family: 'Lucida Sans';
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    color:azure;
+    background-color:#a31318;
+    width: 50vw;
+    margin: auto;
+    min-height: 10vh;
+    border-radius: 0px 10px 10px 10px;
+    overflow-y: auto;
+}
+#conclu{ 
+    z-index: 5;
+    cursor: pointer;
+    opacity: 0;
+    font-family: 'Lucida Sans';
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+    position: fixed;
+    margin: 10px 0 0 120px;
+    display: flex;
+    align-items: center;
+}
+#alert{
+    border: none;
+    z-index: 3;
+    position: fixed;
+    margin: 10px 10vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:80vw;
+    height: 10vh;
+    background-color: rgb(31, 31, 31);
+    border-radius: 10px;
+    color: white;
+    font-family: spline;
+}
+#help{
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'Lucida Sans';
+    position: fixed;
+    margin: 10px  0  0 10px;
+}
+@keyframes bling{  /*hiệu ứng nhấp nháy để gây chú ý*/
+    0%{
+        filter: brightness(100%) saturate(100%) drop-shadow(0px 0px 0px rgb(255, 255, 255));
+    }
+    20%{
+        filter: brightness(1000%) saturate(0%) drop-shadow(10px 10px 10px rgb(255, 255, 255));
+    }
+    40%{
+        filter: brightness(100%) saturate(100%)  drop-shadow(0px 0px 0px rgb(255, 255, 255));
+    }
+    60%{
+        filter: brightness(1000%) saturate(0%) drop-shadow(10px 10px 10px rgb(255, 255, 255));
+    }
+    80%{
+        filter: brightness(100%) saturate(100%)  drop-shadow(0px 0px 0px rgb(255, 255, 255));
+    }
+    100%{
+        filter: brightness(1000%) saturate(0%) drop-shadow(10px 10px 10px rgb(255, 255, 255));
+    }
+}

@@ -1,0 +1,99 @@
+body{
+    overflow-x: hidden;
+    background-color:rgb(22, 18, 21);
+}
+#visual{
+    width: 100vw;
+    height: 100vh;
+    background-image: url("./assets/6a515b7d-7858-4051-8fcd-ec87a9e9183a.png");
+    background-size: contain;
+    background-position: top center;
+}
+#visual a{
+    position: fixed;
+    margin: 96vh 0 0 10px;
+    font-size: 1px;
+    color: rgba(255, 255, 255, 0.888);
+}
+h1{
+    position: fixed;
+    font-family: loveya;
+    color: rgb(240, 254, 255);
+    font-weight: bold;
+    margin: 20px 0 0 20px;
+}
+button{
+    position: fixed;
+    margin: 20px 0 0 90vw;
+    background-color: rgba(247, 247, 247, 0.889);
+    border: none;
+    border-radius: 20px;
+    padding: 0px 20px;
+}
+a{
+    text-decoration: none;
+    color: rgb(49, 63, 46);
+    font-family: rocksalt;
+    font-weight: bold;
+    font-size: 20px;
+    transform: all 0.4s;
+}
+#demo{
+    height: 300px;
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgb(22, 18, 21);
+}
+.video{
+    border: 10px solid rgb(47, 47, 47);
+    border-radius: 0px 10px 10px 10;
+}
+h2{
+    font-family: spline;
+    font-weight: bold;
+    color: rgb(255, 228, 53);
+}
+#comment{
+    background-color:#650000;
+    width: 100vw;
+    height: 40vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#form{
+    margin: auto;
+}
+#content{
+    border: 3px solid rgb(144, 144, 144);
+    border-radius: 10px;
+    padding: 10px 30px;
+}
+#commentList{
+    overflow-y: scroll;
+    background-color: rgb(22, 18, 21);
+    width: 50%;
+    height: 100%;
+}
+#submit{
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color:  rgb(22, 18, 21);
+    color: rgb(255, 228, 53);
+    font-family: loveya;
+}
+.mess{
+    margin: 0 20px;
+    font-family: 'spline';
+    min-height: 20px;
+    background-color: rgb(238, 238, 238);
+    border-radius: 10px 10px 10px 0;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+.mess:hover{
+    font-weight: bold;
+}

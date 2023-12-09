@@ -1,0 +1,84 @@
+#searchbar{
+    display: flex;
+    align-items: center;
+    margin: 20px 0 0 80vw;
+}
+#search{
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+}
+#searchbar span{
+    font-size: 25px;
+    cursor: pointer;
+}
+a{
+    text-decoration: none;
+}
+h1{
+    text-align: center;
+    font-family: goodwater;
+    font-weight: bold;
+    font-size: 70px;
+    color: #fffcf6;
+}
+h2{
+    height: 40%;
+    width: 90%;
+    margin:0;
+    color: #0e0707;
+    text-align: center;
+    letter-spacing: 3px;
+    font-size: 40px;
+    font-family: goodwater;
+}
+.notfound{
+    color: #ffaa00;
+    width: 100vw;
+   position: absolute;
+   top: 178px;
+   font-family: spline;
+   text-align: center;
+   font-size: 30px;
+}
+.col{
+    text-align: center;
+    width: 450px;
+    height: 300px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.col p{
+    height: 20%;
+    font-family: spline;
+    padding: 0 10px;
+}
+.col a{
+    padding: 10px 30px;
+    border-radius: 20px;
+    color: rgb(255, 255, 255);
+    font-family: spline;
+    transition: all 0.2s;
+}
+.col a:hover{
+    font-size: larger;
+}
+.row{
+    display: flex;
+    width: 96vw;
+    justify-content: space-evenly;
+}
+.container{
+    margin: auto;
+    width: 96vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.hide{
+    display: none;
+}

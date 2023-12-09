@@ -1,0 +1,85 @@
+
+    <! -- hàng 1 -->
+    <div class="row unique">
+
+        <div class="col white">
+        <h2>Thuốc Lá</h2>
+        <p>&ensp;&ensp;Thuốc lá ảnh hưởng sức khoẻ của chúng ta như thế nào? Sau khi xem xong mục này, liệu bạn
+            có còn muốn hút thuốc lá?</p>
+        <br>
+        <a href="./topicChildFiles/thuocla.html" class="" target="_blank">Tôi tò mò</a>
+    </div>
+
+    <div class="col white">
+        <h2>Ma Tuý</h2>
+        <p>&ensp;&ensp;Chúng ta vẫn luôn cố gắng phát triển nền văn minh của nhân loại. Vì vậy, hãy tránh xa thứ
+            làm trì hoãn quá trình đó - Ma tuý.</p>
+        <br>
+        <a href="./topicChildFiles/matuy.html" class="" target="_blank">Tôi tò mò</a>
+    </div>
+
+    <div class="col white">
+        <h2>LGBTQIA+</h2>
+        <p>&ensp;&ensp;Đồng tính không phải là một phát minh của phương Tây. Đó là một hiện thực của nhân loại.-
+            Hillary Clinton
+        </p>
+        <br>
+        <a href="./topicChildFiles/lgbt.html" class="" target="_blank">Tôi tò mò</a>
+    </div>
+
+</div>
+<!-- hàng2 -->
+
+<div class="row">
+        <!--  -->
+        <div class="col white">
+        <h2 class="special">Bình đẳng giới</h2>
+        <p>&ensp;&ensp;Dù là nam hay nữ, trai hay gái, đàn ông hay phụ nữ, chúng ta đều phải được
+            hưởng quyền lợi như nhau</p>
+        <br>
+        <a href="./topicChildFiles/binhDangGioi.html" class="" target="_blank">Tôi tò mò</a>
+    </div>
+    <!--  -->
+    <div class="col white">
+        <h2 class="special">Bạo lực Học đường</h2>
+        <p>&ensp;&ensp;Ghen ghét, thù hằn không phải là lí do biện minh cho hành động bạo lực học đường. Nó là cái cớ.
+        </p>
+        <br>
+        <a href="./topicChildFiles/blhd.html" class="" target="_blank">Tôi tò mò</a>
+    </div>
+    <!--  -->
+    <div class="col white">
+        <h2 class="special">Body Shaming</h2>
+        <p>&ensp;&ensp;Quá trình lớn lên và trưởng thành của những đứa trẻ bị gắn mác "Không có nhan sắc". </p>
+        <br>
+        <a href="./topicChildFiles/nhansac.html" class="" target="_blank">Tôi tò mò</a>
+    </div>
+</div>
+
+<!--hàng 3  -->
+
+<div class="row">
+    <!--  -->
+    <div class="col white">
+        <h2>Đen và Trắng</h2>
+        <p>&ensp;&ensp;Không màu da nào khiến chúng ta thượng đẳng hơn bất cứ ai khác. Con người đều phải được
+            hưởng quyền lợi như nhau.</p>
+        <br>
+        <a href="./topicChildFiles/black&white.html" class="" target="_blank">Tôi tò mò</a>
+    </div>
+    <!--  -->
+    <div class="col white">
+        <h2>Giàu và Nghèo</h2>
+        <p>&ensp;&ensp;Thân phận không phải là một yếu tố để ta
+            dựa vào mà đánh giá và đối xử với người khác</p>
+        <br>
+        <a href="./topicChildFiles/giaungheo.html" class="" target="_blank">Tôi tò mò</a>
+    </div>
+    <!--  -->
+    <div class="col white">
+        <h2 class="special">Môi Trường</h2>
+        <p>&ensp;&ensp;Bạn sẽ đứng yên nhìn nhà bạn đang bị huỷ hoại mà không ngăn cản chứ?
+            Có thể bạn cũng đang làm điều tương tự với 'ngôi nhà xanh' của mình.</p>
+        <br>
+        <a href="./topicChildFiles/moitruong.html" class="" target="_blank">Tôi tò mò</a>
+    </div>
