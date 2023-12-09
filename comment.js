@@ -45,3 +45,10 @@ if(JSON.parse(localStorage.getItem("list")) != [] && JSON.parse(localStorage.get
         commentList.appendChild(space)
     }
 }
+
+// chặn thiết bị là điện thoại
+// 1476x922
+if(screen.width < 1476 || screen.height <922){
+    alert("Thật sự xin lỗi! Trang web hiện chỉ hỗ trợ thiết bị là máy tính hoặc laptop")
+    location.reload()
+}
