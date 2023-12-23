@@ -15,4 +15,9 @@ const list=[
         desb:"Thử nghiệm với lượng ít, vừa, nhiều",
         link:"../hoahoc/natri&nuoc/natri&nuoc.html",
     },
+    {
+        title:"",
+        desb:"Thử nghiệm với lượng ít, vừa, nhiều",
+        link:"../hoahoc/natri&nuoc/natri&nuoc.html",
+    },
 ]

@@ -47,8 +47,16 @@ if(JSON.parse(localStorage.getItem("list")) != [] && JSON.parse(localStorage.get
 }
 
 // chặn thiết bị là điện thoại
-// 1476x922
-if(screen.width < 1476 || screen.height <922){
-    alert("Thật sự xin lỗi! Trang web hiện chỉ hỗ trợ thiết bị là máy tính hoặc laptop")
-    location.reload()
+let width = window.matchMedia("(min-width: 1460px)","(min-height: 720px)")
+function blockMobile(){
+    if (!width.matches) { 
+        alert("Chỉ hỗ trợ cho Laptop / Máy tính bàn hoặc để tab full màn hình")
+        window.location.href=""
+    }
 }
+blockMobile()
+width.addEventListener("change",function(){
+    blockMobile()
+})
+
+  

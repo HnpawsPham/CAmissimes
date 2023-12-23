@@ -4,6 +4,9 @@ body{
     box-sizing: border-box;
     background-attachment: fixed;
 }
+.hidden{
+    visibility: hidden;
+}
 /* colors */
 .youngGreen{
     background-color: #4F6F52;
@@ -144,7 +147,7 @@ body{
     padding: 5px 20px;
     top: 30px;
     visibility: hidden;
-    left: 290px;
+    left: 250px;
     font-family: 'Lucida Sans';
     position: fixed;
     display: flex;
