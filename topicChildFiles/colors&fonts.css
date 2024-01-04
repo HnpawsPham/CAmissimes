@@ -195,7 +195,7 @@ body{
     color: black;
     font-weight: bold;
     cursor: pointer;
-    font-family: 'Lucida Sans';
+    font-family: spline;
     position: fixed;
     margin: 10px  0  0 10px;
 }

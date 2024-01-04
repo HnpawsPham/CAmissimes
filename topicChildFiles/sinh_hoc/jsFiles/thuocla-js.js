@@ -24,8 +24,8 @@ function movecig() {
         // lấy vị trí của phần tử
         const cig = document.getElementById('thuocla')
         cig.style.opacity = '1'
-        cig.style.left = mX - 10 + "px";
-        cig.style.top = mY - 140 + "px";
+        cig.style.left = mX + "px";
+        cig.style.top = mY + "px";
     })
 }
 // tạo hiệu ứng hút thuốc

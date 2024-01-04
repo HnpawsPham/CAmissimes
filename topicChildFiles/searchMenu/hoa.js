@@ -16,8 +16,10 @@ const list=[
         link:"../hoahoc/natri&nuoc/natri&nuoc.html",
     },
     {
-        title:"",
-        desb:"Thử nghiệm với lượng ít, vừa, nhiều",
-        link:"../hoahoc/natri&nuoc/natri&nuoc.html",
+    },
+    {
+        title:"Các thể của chất",
+        desb:"Quan sát các thể của chất",
+        link:"../hoahoc/cac-the-cua-chat/cac-the-cua-chat.html",
     },
 ]

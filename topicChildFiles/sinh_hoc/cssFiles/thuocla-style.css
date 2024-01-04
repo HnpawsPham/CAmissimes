@@ -54,3 +54,8 @@ span:hover{
 #skip:hover{
     color: rgb(161, 159, 159);
 }
+#mouth{
+    position: fixed;
+    width: 27px;
+    margin: 140px 0 0 736px;
+}
