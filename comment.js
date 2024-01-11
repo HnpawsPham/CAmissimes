@@ -49,9 +49,9 @@ if(JSON.parse(localStorage.getItem("list")) != [] && JSON.parse(localStorage.get
 // chặn thiết bị là điện thoại
 let width = window.matchMedia("(min-width: 1460px)","(min-height: 720px)")
 function blockMobile(){
-    if (!width.matches) { 
+    if (window.innerWidth <= 768) {
         alert("Chỉ hỗ trợ cho Laptop / Máy tính bàn hoặc để tab full màn hình")
-        window.location.href=""
+        location.reload()
     }
 }
 blockMobile()

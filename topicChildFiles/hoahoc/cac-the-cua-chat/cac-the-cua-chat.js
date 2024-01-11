@@ -4,6 +4,7 @@ const flow = document.getElementById("flow")
 const fridge = document.getElementById("fridge")
 const steam = document.getElementById("steam")
 const bucket = document.getElementById("bucket")
+const liquid = document.getElementById("liquid")
 
 let moveKettle = false
 let moveBucket = false
@@ -11,6 +12,7 @@ let kettleOpen = false
 let fridgeOpen = false
 let kettleHasWater = false
 let bucketHasWater = false
+let bucketInFridge = false
 
 let waterType = "liquid"
 let boilTried = false
@@ -96,9 +98,9 @@ function getWater(obj) {
     else if (obj == bucket && !bucketHasWater) {
         if (bucket.getBoundingClientRect().top > tap.getBoundingClientRect().bottom - 20 && bucket.getBoundingClientRect().bottom < tap.getBoundingClientRect().bottom + bucket.getBoundingClientRect().height + 100) {
             if (bucket.getBoundingClientRect().left < tap.getBoundingClientRect().left + 50 && bucket.getBoundingClientRect().left > tap.getBoundingClientRect().left - bucket.getBoundingClientRect().width) {
-                root.style.setProperty("--flowHeight",bucket.getBoundingClientRect().top + tap.getBoundingClientRect().bottom + "px")
+                root.style.setProperty("--flowHeight", bucket.getBoundingClientRect().top + tap.getBoundingClientRect().bottom + "px")
                 waterAnim()
-                bucketHasWater= true
+                bucketHasWater = true
             }
         }
     }
@@ -109,11 +111,19 @@ fridge.addEventListener("click", function () {
         fridge.src = "./assets/fridgeopen.png"
         fridgeOpen = true
         fridge.style.margin = "140px 0 0 810px"
+
+        if(bucketInFridge){
+            bucket.style.opacity="1"
+        }
     }
     else {
         fridge.src = "./assets/fridge.png"
         fridgeOpen = false
         fridge.style.margin = "100px 0 0 700px"
+
+        if(bucketInFridge){
+            bucket.style.opacity="0.4"
+        }
     }
 })
 
@@ -160,11 +170,34 @@ function waterAnim() {
     })
 }
 
-function putBucketInFridge(){
-    if(bucket.getBoundingClientRect().left > fridge.getBoundingClientRect().left && bucket.getBoundingClientRect().right < fridge.getBoundingClientRect().right){
-        if(bucket.getBoundingClientRect().top > fridge.getBoundingClientRect().top && bucket.getBoundingClientRect().bottom < fridge.getBoundingClientRect().bottom){
-            bucket.style.display="none"
-        }
+function putBucketInFridge() {
+    if (bucket.getBoundingClientRect().left > fridge.getBoundingClientRect().left && bucket.getBoundingClientRect().right < fridge.getBoundingClientRect().right) {
+        if (bucket.getBoundingClientRect().top > fridge.getBoundingClientRect().top && bucket.getBoundingClientRect().bottom < fridge.getBoundingClientRect().bottom) {
+            //adjust outlook
+            if (!bucketInFridge && fridgeOpen) {
+                bucket.style.top = fridge.getBoundingClientRect().bottom - bucket.getBoundingClientRect().height - 5 + "px"
+                bucket.style.left = fridge.getBoundingClientRect().left + 80 + "px"
+                bucket.style.width = "100px"
+                bucket.style.height = "92.79px"
+                bucket.querySelector("img").style.width = "100px"
+                bucket.querySelector("img").style.height = "92.79px"
+                liquid.style.bottom = "2px"
+                liquid.style.left = "6px"
+                liquid.style.borderRadius = "0px 0px 25px 25px"
 
+                bucketInFridge = true
+            }
+            else {
+                bucket.style.width = "150px"
+                bucket.style.height = "142.79px"
+                bucket.querySelector("img").style.width = "150px"
+                bucket.querySelector("img").style.height = "142.79px"
+                liquid.style.bottom = "5px"
+                liquid.style.left = "10px"
+                liquid.style.borderRadius = "0px 0px 40px 40px"
+
+                bucketInFridge = false
+            }
+        }
     }
 }
