@@ -148,7 +148,7 @@ body{
     top: 30px;
     visibility: hidden;
     left: 250px;
-    font-family: 'Lucida Sans';
+    font-family: spline;
     position: fixed;
     display: flex;
     justify-content: center;
@@ -192,6 +192,7 @@ body{
     font-family: spline;
 }
 #help{
+    z-index: 10;
     color: black;
     font-weight: bold;
     cursor: pointer;

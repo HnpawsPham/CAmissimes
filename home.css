@@ -9,6 +9,10 @@ body{
     background-size: contain;
     background-position: top center;
 }
+#getComment{
+    color: white;
+    cursor: pointer;
+}
 #visual a{
     position: fixed;
     margin: 96vh 0 0 10px;

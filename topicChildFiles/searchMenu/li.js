@@ -19,8 +19,8 @@ const list=[
 
     },
     {
-        title:"không tiêu đề",
-        desb:"Chưa có thí nghiệm",
-        link:"",
+        title:"Sự nở vì nhiệt của chất lỏng",
+        desb:"Thực hành, quan sát thí nghiệm",
+        link:"./su-no-vi-nhiet-cua-chat-long.html",
     },
 ]
