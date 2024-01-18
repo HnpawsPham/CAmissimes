@@ -68,7 +68,7 @@ app.get("/getComment",(req,res) => {
 
 
 
-// Cho nay dung de xoa comment :)))
+// Cho nay dung de xoa comment
 app.delete("/deleteComment", (req, res) => {
 
 

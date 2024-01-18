@@ -341,10 +341,9 @@ function liquidBloom(bottle) {
 
             if (bottle == wineBottle) {
                 appendAnim(wine,"wine-rising",8,50)
-                
             }
             else if (bottle == waterBottle) {
-                appendAnim(water,"wine-rising",5,20)
+                appendAnim(water,"water-rising",5,20)
             }
             else if (bottle == oilBottle) {
                 appendAnim(oil,"oil-rising",12,90)
