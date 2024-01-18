@@ -25,6 +25,7 @@ let moveWineBottle = false
 let moveKettle = false
 let kettleIsOpen = false
 let kettleHasWater = false
+let kettleIsRotated = false
 let isBoiling = false
 let glassContainerHasWater = false
 let waterInGlassContainerIsBoiling = false
@@ -129,6 +130,7 @@ kettle.addEventListener("click", function () {
 })
 
 kettle.addEventListener("dblclick", function () {
+    steamMargin()
     pourWater()
     if (!kettleIsOpen) {
         kettle.querySelector("img").src = "./assets/open.png"
@@ -202,8 +204,10 @@ function pourWater() {
                 if (kettleHasWater) {
                     if (kettle.getBoundingClientRect().left > glassContainer.getBoundingClientRect().left && kettle.getBoundingClientRect().right < glassContainer.getBoundingClientRect().right) {
                         if (kettle.getBoundingClientRect().bottom < glassContainer.getBoundingClientRect().bottom && kettle.getBoundingClientRect().top < glassContainer.getBoundingClientRect().top - 200) {
-
                             kettle.style.transform = "rotate(-90deg)"
+                            kettleIsRotated = true
+                            steamMargin()
+
                             root.style.setProperty("--pourWaterHeight", (glassContainer.getBoundingClientRect().bottom - kettle.getBoundingClientRect().bottom - 18 + "px"))
 
                             if (kettleIsOpen) {
@@ -243,6 +247,8 @@ function pourWater() {
                                     waterInside.style.width = "0px"
 
                                     kettle.style.transform = "rotate(0deg)"
+                                    kettleIsRotated = false
+                                    steamMargin()
                                     kettleHasWater = false
                                 })
                             })
@@ -262,23 +268,23 @@ function pourWater() {
 
 function steamMargin() {
     if (!kettleIsOpen) {
-        if(kettle.style.transform == "rotate(0deg)"){
+        if (!kettleIsRotated) {
             steam.style.transform = "rotate(0deg)"
             steam.style.margin = `${kettle.getBoundingClientRect().top - steam.getBoundingClientRect().height / 1.3}px 0 0 ${kettle.getBoundingClientRect().left - steam.getBoundingClientRect().width / 2.5}px`
         }
-        else{
+        else {
             steam.style.transform = "rotate(120deg)"
-            steam.style.margin = `${-kettle.getBoundingClientRect().left/2}px 0 0 ${kettle.getBoundingClientRect().top/2}px`
+            steam.style.margin = `${kettle.getBoundingClientRect().left - steam.getBoundingClientRect().width + 0}px 0 0 ${kettle.getBoundingClientRect().left - 170}px`
         }
     }
     else {
-        if(kettle.style.transform == "rotate(0deg)"){
+        if (!kettleIsRotated) {
             steam.style.transform = "rotate(-20deg)"
             steam.style.margin = `${kettle.getBoundingClientRect().top - steam.getBoundingClientRect().height / 2}px 0 0 ${kettle.getBoundingClientRect().left - steam.getBoundingClientRect().width / 5}px`
         }
-        else{
+        else {
             steam.style.transform = "rotate(-140deg)"
-            steam.style.margin = `${kettle.getBoundingClientRect().left - steam.getBoundingClientRect().height / 2}px 0 0 ${kettle.getBoundingClientRect().top - steam.getBoundingClientRect().width / 5}px`
+            steam.style.margin = `${kettle.getBoundingClientRect().top + 50}px 0 0 ${kettle.getBoundingClientRect().left - 90}px`
         }
     }
 }
@@ -292,18 +298,19 @@ function boilWater() {
 
                 isBoiling = true
                 steam.style.animation = "start-steaming 3s ease"
+                steam.addEventListener("animationend",function(){
+                    steam.style.opacity = "0.8"
+                })
 
-                steam.addEventListener("animationend", async function () {
-                    await sleep(100000)
-                    steam.style.animation = "end-steaming 3s ease"
+                await sleep(100000)
+                steam.style.animation = "end-steaming 3s ease"
 
-                    steam.addEventListener("animationend", function () {
-                        isBoiling = false
-                        waterInGlassContainerIsBoiling = false
-                        glassContainerSteam.style.opacity = "0"
-                        steam.style.opacity = "0"
-                        kettleHasWater = false
-                    })
+                steam.addEventListener("animationend", function () {
+                    isBoiling = false
+                    waterInGlassContainerIsBoiling = false
+                    glassContainerSteam.style.opacity = "0"
+                    steam.style.opacity = "0"
+                    kettleHasWater = false
                 })
             }
             else {
@@ -325,8 +332,8 @@ function checkIfInGlassContainer(bottle) {
     return false
 }
 
-function appendAnim(liquid,animName,sec,height){
-    liquid.style.animation = `${animName} ${sec}s ease`
+function appendAnim(liquid, animName, height) {
+    liquid.style.animation = `${animName} 10s ease`
 
     liquid.addEventListener("animationend", function () {
         liquid.style.height = height + "px" ///CẦN SỬA
@@ -336,19 +343,17 @@ function appendAnim(liquid,animName,sec,height){
 function liquidBloom(bottle) {
     if (glassContainerHasWater) {
         if (waterInGlassContainerIsBoiling) {
-            let height
-            let liquid
 
             if (bottle == wineBottle) {
-                appendAnim(wine,"wine-rising",8,50)
+                appendAnim(wine, "wine-rising", 50)
             }
             else if (bottle == waterBottle) {
-                appendAnim(water,"water-rising",5,20)
+                appendAnim(water, "water-rising", 20)
             }
             else if (bottle == oilBottle) {
-                appendAnim(oil,"oil-rising",12,90)
+                appendAnim(oil, "oil-rising", 90)
             }
-            
+
         }
         else {
             notification("Nước ở nhiệt độ bình thường, không có gì thay đổi", 5000)
