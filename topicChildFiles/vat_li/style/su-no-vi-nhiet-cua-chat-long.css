@@ -70,7 +70,20 @@ body{
     margin: 400px 0 0 50vw;
     transform: translateX(-20vw);
 }
-#glass-container img{
+#ice-inside{
+    width: 350px;
+    position:absolute;
+    top: 10px;
+    left: 60px;
+    opacity: 0;
+}
+#ice-bucket{
+    z-index: 5;
+    width: 150px;
+    position: fixed;
+    margin: 400px 0 0 300px;
+}
+#main{
     width: 500px;
 }
 #glass-container-water{

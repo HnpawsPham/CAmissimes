@@ -196,31 +196,62 @@ function boilWater() {
             await sleep(3000)
 
             isBoiling = true
+            steam.style.animation = "start-steaming 3s ease"
+
             if(!microscopeVisiblingSteamElms){
-                root.style.setProperty("--steamOpacity",0.6)
                 steamElms.style.animation = "none"
+                steamElms.style.opacity = "0"
+                steam.style.opacity = "0.6"
             }
             else{
-                root.style.setProperty("--steamOpacity",0)
+                root.style.setProperty("--steamOpacity",0.6)
                 steamElms.style.animation = "start-steaming 3s ease"
+                steamElms.style.opacity = "1"
+                steam.style.animation = "none"
+                steam.style.opacity = "0"
             }
-            steam.style.animation = "start-steaming 3s ease"
             
             steam.addEventListener("animationend", async function () {
-                steam.style.opacity = 0.6
-                await sleep(10000)
-                steam.style.animation = "end-steaming 3s ease"
                 if(!microscopeVisiblingSteamElms){
-                    steamElms.style.animation = "end-steaming 3s ease"
+                    steamElms.style.opacity = "0"
+                    steam.style.opacity = "0.6"
                 }
                 else{
+                    steamElms.style.opacity = "1"
+                    steam.style.opacity = "0"
+                }
+                await sleep(10000)
+                root.style.setProperty("--steamOpacity",0.6)
+                if(!microscopeVisiblingSteamElms){    
+                    steam.style.opacity = "0.6"
+                    steam.style.animation = "end-steaming 3s"
                     steamElms.style.animation = "none"
+                    steamElms.style.opacity = "0"
+                }
+                else{
+                    steam.style.opacity = "0"
+                    steam.style.animation = "none"
+                    steamElms.style.opacity = "1"
+                    steamElms.style.animation = "end-steaming 3s ease"
                 }
                 
 
                 steam.addEventListener("animationend", function () {
                     isBoiling = false
                     steam.style.opacity = "0"
+                    steamElms.style.opacity = "0"
+                    steam.style.animation = "none"
+                    steamElms.style.animation = "none"
+                    kettleHasWater = false
+                    boilTried = true
+                    visibleConclusion()
+                })
+                steamElms.addEventListener("animationend", function () {
+                    isBoiling = false
+                    steam.style.opacity = "0"
+                    steamElms.style.opacity = "0"
+                    steam.style.animation = "none"
+                    steamElms.style.animation = "none"
                     kettleHasWater = false
                     boilTried = true
                     visibleConclusion()

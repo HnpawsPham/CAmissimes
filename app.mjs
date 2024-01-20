@@ -51,7 +51,7 @@ app.post("/addComment", (req, res) => {
    }
 
     // return
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'index.html'))
 })
 // Neu ma muon :)) doc du liẹu  chuyen thanh mang thi nên luu duoi dang json.
 
