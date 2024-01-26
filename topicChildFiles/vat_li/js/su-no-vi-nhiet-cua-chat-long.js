@@ -1,4 +1,5 @@
 const tb = document.getElementById("alert")
+const ding = document.getElementById("ding")
 
 const waterBottle = document.getElementById("water-bottle")
 const oilBottle = document.getElementById("oil-bottle")
@@ -34,6 +35,7 @@ let glassContainerHasWater = false
 let waterInGlassContainerIsBoiling = false
 let iceBucketHasIce = true
 let glassContainerHasIce = false
+let visibleIceBucket = false
 
 // hàm đợi
 function sleep(ms) {
@@ -93,10 +95,6 @@ function moveObj(obj, move) {
         let mY = event.clientY
 
         steamMargin()
-
-        if(water.style.height == "35px" && wine.style.height == "60px" && oil.style.height == "93px"){
-            iceBucket.style.display = "inline-block"
-        }
 
         if (move) {
             obj.style.position = "absolute"
@@ -385,6 +383,15 @@ async function appendAnim(liquid, animName, height, reverse) {
         liquid.addEventListener("animationend", function () {
             liquid.style.height = height + "px"
             liquid.style.animation = "none"
+
+            // Hiện xô đá khi tất cả đã chạy xong anim
+            if(water.style.height == "35px" && wine.style.height == "60px" && oil.style.height == "93px"){
+                if(!visibleIceBucket){
+                    ding.play()
+                    iceBucket.style.display = "inline-block"
+                    visibleIceBucket  = true
+                }
+            }
         })
     }
     else {
