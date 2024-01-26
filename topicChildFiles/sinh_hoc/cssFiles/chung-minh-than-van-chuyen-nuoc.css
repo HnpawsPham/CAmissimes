@@ -18,6 +18,15 @@ body{
     font-weight: bold;
     margin: 10px 0 0 10px;
 }
+#restart{
+    z-index: 10;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-family: spline;
+    position: fixed;
+    margin: 80px 0 0 10px;
+}
 #alert{
     z-index: 3;
     position: fixed;
@@ -89,7 +98,7 @@ body{
     width: 200px;
 }
 #knife{
-    z-index: 2;
+    z-index: 5;
     position: fixed;
     margin: 530px 0 0 130px;
     width: 300px;

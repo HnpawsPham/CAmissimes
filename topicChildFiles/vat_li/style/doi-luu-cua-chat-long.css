@@ -28,12 +28,12 @@
     color: white;
     font-size: 20px;
     position: absolute;
-    bottom: 100px;
-    left: 20px;
+    bottom: 60px;
+    left: -120px;
     width: 80px;
     height: 40px;
     background-color: rgb(88, 103, 174);
-    border-radius:  70px 40px 70px 0px;
+    border-radius:  70px 0px 70px 40px;
 }
 #boil{
     z-index: -1;
@@ -125,7 +125,7 @@
 }
 @keyframes moveTemperIndex {
     from{
-        bottom: 100px;
+        bottom: 60px;
     }
     to{
        bottom: 220px;

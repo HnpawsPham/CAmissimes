@@ -8,6 +8,7 @@ const bigLoopNote = document.getElementById("bigLoopNote")
 const smallLoopNote = document.getElementById("smallLoopNote")
 const heart = document.getElementById("heart")
 const choices = document.querySelectorAll("input")
+
 const part1=document.getElementById("part1")
 const part2=document.getElementById("part2")
 const part3=document.getElementById("part3")

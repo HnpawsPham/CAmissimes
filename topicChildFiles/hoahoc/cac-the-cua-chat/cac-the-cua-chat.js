@@ -5,7 +5,7 @@ const fridge = document.getElementById("fridge")
 const steam = document.getElementById("steam")
 const bucket = document.getElementById("bucket")
 const liquid = document.getElementById("liquid")
-const help =document.getElementById("help")
+const help = document.getElementById("help")
 const tb = document.getElementById("alert")
 const elmsInside = document.getElementById("elm-inside")
 const steamElms = document.getElementById("steam-elms")
@@ -33,17 +33,17 @@ function sleep(ms) {
 }
 
 // hướng dẫn thao tác
-help.addEventListener("click",function(){
+help.addEventListener("click", function () {
     alert("- Click: bắt đầu di chuyển đồ vật\n- Click lần nữa: bỏ đồ vật xuống\n- Di chuột: di chuyển đồ vật\n- Dùng miếng kính (hình chữ nhật có viền đen) để soi phân tử các thể của nước\n- Bấm 'b' trên bàn phím để sử dụng ấm đun siêu tốc\n*Các thể gồm:\n - Thể rắn\n - Thể lỏng\n - Thể khí (hơi nước)")
 })
 
 // custom alert
-function notification(content,milisec){
+function notification(content, milisec) {
     tb.style.display = "flex"
     tb.innerHTML = content
-    setTimeout(function(){
+    setTimeout(function () {
         tb.style.display = "none"
-    },milisec)
+    }, milisec)
 
 }
 
@@ -83,6 +83,7 @@ function moveObj(obj, move) {
         steamMargin()
         elmsInsideMargin()
         visibleElmsInside()
+        boilWater()
 
         if (move) {
             obj.style.position = "absolute"
@@ -111,18 +112,18 @@ kettle.addEventListener("dblclick", function () {
 bucket.addEventListener("click", function () {
     putBucketInFridge()
     moveBucket = !moveBucket
-    if(bucketInFridge){
-       bucket.style.pointerEvents = "none"
+    if (bucketInFridge) {
+        bucket.style.pointerEvents = "none"
     }
-    else{
+    else {
         bucket.style.pointerEvents = "auto"
     }
 
     moveObj(bucket, moveBucket)
 })
-microscope.addEventListener("click",function(){
+microscope.addEventListener("click", function () {
     moveMicroscope = !moveMicroscope
-    moveObj(microscope,moveMicroscope)
+    moveObj(microscope, moveMicroscope)
 })
 
 function getWater(obj) {
@@ -154,8 +155,8 @@ fridge.addEventListener("click", function () {
         fridgeOpen = true
         fridge.style.margin = "140px 0 0 810px"
 
-        if(bucketInFridge){
-            bucket.style.opacity="1"
+        if (bucketInFridge) {
+            bucket.style.opacity = "1"
         }
     }
     else {
@@ -163,8 +164,8 @@ fridge.addEventListener("click", function () {
         fridgeOpen = false
         fridge.style.margin = "100px 0 0 700px"
 
-        if(bucketInFridge){
-            bucket.style.opacity="0.4"
+        if (bucketInFridge) {
+            bucket.style.opacity = "0.4"
         }
     }
     freezeWater()
@@ -185,89 +186,43 @@ function steamMargin() {
     }
 }
 
-function elmsInsideMargin(){
+function elmsInsideMargin() {
     elmsInside.style.marginTop = bucket.getBoundingClientRect().top + 40 + "px"
-    elmsInside.style.marginLeft= bucket.getBoundingClientRect().left + "px"
+    elmsInside.style.marginLeft = bucket.getBoundingClientRect().left + "px"
 }
 
 function boilWater() {
     document.addEventListener("keypress", async function (e) {
-        if (e.key.toLowerCase() == "b" && kettleHasWater) {
-            await sleep(3000)
+        if (e.key.toLowerCase() == "b") {
+            if (kettleHasWater) {
+                // Chờ khoảng 2s cho nước sôi mới bốc khối
+                await sleep(2000)
 
-            isBoiling = true
-            steam.style.animation = "start-steaming 3s ease"
-
-            if(!microscopeVisiblingSteamElms){
-                steamElms.style.animation = "none"
-                steamElms.style.opacity = "0"
+                isBoiling = true
                 steam.style.opacity = "0.6"
-            }
-            else{
-                root.style.setProperty("--steamOpacity",0.6)
-                steamElms.style.animation = "start-steaming 3s ease"
-                steamElms.style.opacity = "1"
-                steam.style.animation = "none"
-                steam.style.opacity = "0"
-            }
-            
-            steam.addEventListener("animationend", async function () {
-                if(!microscopeVisiblingSteamElms){
-                    steamElms.style.opacity = "0"
-                    steam.style.opacity = "0.6"
-                }
-                else{
-                    steamElms.style.opacity = "1"
-                    steam.style.opacity = "0"
-                }
-                await sleep(10000)
-                root.style.setProperty("--steamOpacity",0.6)
-                if(!microscopeVisiblingSteamElms){    
-                    steam.style.opacity = "0.6"
-                    steam.style.animation = "end-steaming 3s"
-                    steamElms.style.animation = "none"
-                    steamElms.style.opacity = "0"
-                }
-                else{
-                    steam.style.opacity = "0"
-                    steam.style.animation = "none"
-                    steamElms.style.opacity = "1"
-                    steamElms.style.animation = "end-steaming 3s ease"
-                }
-                
 
-                steam.addEventListener("animationend", function () {
-                    isBoiling = false
-                    steam.style.opacity = "0"
-                    steamElms.style.opacity = "0"
-                    steam.style.animation = "none"
-                    steamElms.style.animation = "none"
-                    kettleHasWater = false
-                    boilTried = true
-                    visibleConclusion()
-                })
-                steamElms.addEventListener("animationend", function () {
-                    isBoiling = false
-                    steam.style.opacity = "0"
-                    steamElms.style.opacity = "0"
-                    steam.style.animation = "none"
-                    steamElms.style.animation = "none"
-                    kettleHasWater = false
-                    boilTried = true
-                    visibleConclusion()
-                })
-            })
+                // sôi khoảng 10s thì hết nước do bốc thành hơi nước chạy ra ngoài
+                await sleep(10000)
+
+                steam.style.opacity = "0"
+                isBoiling = false
+                kettleHasWater = false
+                boilTried = true
+                visibleConclusion()
+            }
+            else {
+                notification("Ấm không có nước!", 2000)
+            }
         }
     })
 }
-boilWater()
 
 async function waterAnim(obj) {
     flow.style.animation = "waterflow 3s ease"
     await sleep(2000)
-    if(obj == bucket){
+    if (obj == bucket) {
         liquid.style.animation = "bucket-liquid-rise 3s ease"
-        liquid.addEventListener("animationend",function(){
+        liquid.addEventListener("animationend", function () {
             liquid.style.height = "60%"
             bucketHasWater = true
             waterType = "liquid"
@@ -282,7 +237,7 @@ async function waterAnim(obj) {
         })
     })
 }
-
+// BỎ XÔ VÀO TỦ LẠNH
 function putBucketInFridge() {
     if (bucket.getBoundingClientRect().left > fridge.getBoundingClientRect().left && bucket.getBoundingClientRect().right < fridge.getBoundingClientRect().right) {
         if (bucket.getBoundingClientRect().top > fridge.getBoundingClientRect().top && bucket.getBoundingClientRect().bottom < fridge.getBoundingClientRect().bottom) {
@@ -293,15 +248,28 @@ function putBucketInFridge() {
                 bucket.style.left = fridge.getBoundingClientRect().left + 80 + "px"
                 bucket.style.width = "100px"
                 bucket.style.height = "92.79px"
+
                 bucket.querySelector("img").style.width = "100px"
                 bucket.querySelector("img").style.height = "92.79px"
+
                 liquid.style.bottom = "2px"
                 liquid.style.left = "6px"
+
+                elmsInside.style.width = "100px"
+                elmsInside.style.height = "55px"
+                elmsInside.style.marginTop = bucket.getBoundingClientRect().top +40+ "px"
+                elmsInside.style.marginLeft = bucket.getBoundingClientRect().left + "px"
+
                 liquid.style.borderRadius = "0px 0px 25px 25px"
 
                 bucketInFridge = true
             }
             else {
+                elmsInside.style.width = "150px"
+                elmsInside.style.height = "105px"
+                elmsInside.style.marginTop = bucket.getBoundingClientRect().top + "px"
+                elmsInside.style.marginLeft = bucket.getBoundingClientRect().left + "px"
+
                 bucket.style.width = "150px"
                 bucket.style.height = "142.79px"
                 bucket.querySelector("img").style.width = "150px"
@@ -316,78 +284,88 @@ function putBucketInFridge() {
     }
 }
 
-async function freezeWater(){
-    if(bucketInFridge && !fridgeOpen && bucketHasWater){
-        if(waterType == "liquid"){
-            while(sec>=0){
-                notification(`Chờ ${sec} giây nữa để nước đông lại`,1000)
+async function freezeWater() {
+    if (bucketInFridge && !fridgeOpen && bucketHasWater) {
+        if (waterType == "liquid") {
+            while (sec >= 0) {
+                notification(`Chờ ${sec} giây nữa để nước đông lại`, 1000)
                 await sleep(1000)
                 sec--
             }
-            notification("Nước đã đông lại thành đá",3000)
+            notification("Nước đã đông lại thành đá", 3000)
             waterType = "ice"
             returnWaterType(waterType)
         }
-        else{
-            notification("Thể này không thể đông đá được",3000)
+        else {
+            notification("Thể này không thể đông đá được", 3000)
         }
     }
-    else if(bucketInFridge && fridgeOpen && bucketHasWater && waterType == "liquid"){
-        notification("Đóng cửa tủ lạnh để nước đông lại nhanh hơn",3000)
+    else if (bucketInFridge && fridgeOpen && bucketHasWater && waterType == "liquid") {
+        notification("Đóng cửa tủ lạnh để nước đông lại nhanh hơn", 3000)
     }
-    else if(bucketInFridge && !fridgeOpen && !bucketHasWater){
-        notification("Không có gì trong xô!",3000)
+    else if (bucketInFridge && !fridgeOpen && !bucketHasWater) {
+        notification("Không có gì trong xô!", 3000)
     }
 }
 
-function returnWaterType(type){
-    if(type == "liquid"){
-       liquid.style.backgroundColor = "aquamarine" 
-       liquid.style.backgroundImage = "none"
-       elmsInside.src = "./assets/liquid.png"
+function returnWaterType(type) {
+    if (type == "liquid") {
+        liquid.style.backgroundColor = "aquamarine"
+        liquid.style.backgroundImage = "none"
+        elmsInside.src = "./assets/liquid.png"
     }
-    else if(type == "ice"){
-        liquid.style.backgroundColor = "none" 
+    else if (type == "ice") {
+        liquid.style.backgroundColor = "none"
         liquid.style.backgroundImage = "url(./assets/ice-pattern.jpg)"
         elmsInside.src = "./assets/ice-elms.png"
     }
 }
 
-function visibleElmsInside(){
-    if(waterType != "none"){
-        if(microscope.getBoundingClientRect().right - 30 > bucket.getBoundingClientRect().left && microscope.getBoundingClientRect().left + 30 < bucket.getBoundingClientRect().right){
-            if(microscope.getBoundingClientRect().bottom > bucket.getBoundingClientRect().top + 45 && microscope.getBoundingClientRect().top < bucket.getBoundingClientRect().bottom){
-                elmsInside.style.opacity = "1"
+function visibleElmsInside() {
+    if (waterType != "none") {
+        if (microscope.getBoundingClientRect().right - 30 > bucket.getBoundingClientRect().left && microscope.getBoundingClientRect().left + 30 < bucket.getBoundingClientRect().right) {
+            if (microscope.getBoundingClientRect().bottom > bucket.getBoundingClientRect().top + 45 && microscope.getBoundingClientRect().top < bucket.getBoundingClientRect().bottom) {
+                if(!bucketInFridge){
+                    elmsInside.style.opacity = "1"
+                }
+                else{
+                    elmsInside.style.opacity = "0.6"
+                }
                 liquid.style.opacity = "0"
             }
-            else{
+            else {
                 elmsInside.style.opacity = "0"
                 liquid.style.opacity = "1"
             }
         }
-        else{
+        else {
             elmsInside.style.opacity = "0"
             liquid.style.opacity = "1"
         }
     }
     // STEAM
-    if(isBoiling){
-        if(microscope.getBoundingClientRect().right - 30 > steamElms.getBoundingClientRect().left && microscope.getBoundingClientRect().left +30 < steamElms.getBoundingClientRect().right){
-            if(microscope.getBoundingClientRect().bottom > steamElms.getBoundingClientRect().top + 5 && microscope.getBoundingClientRect().top < steamElms.getBoundingClientRect().bottom){
+    if (isBoiling) {
+        if (microscope.getBoundingClientRect().right - 30 > steamElms.getBoundingClientRect().left && microscope.getBoundingClientRect().left + 30 < steamElms.getBoundingClientRect().right) {
+            if (microscope.getBoundingClientRect().bottom > steamElms.getBoundingClientRect().top + 5 && microscope.getBoundingClientRect().top < steamElms.getBoundingClientRect().bottom) {
+                microscopeVisiblingSteamElms = true
                 steamElms.style.opacity = "1"
                 steam.style.opacity = "0"
-                microscopeVisiblingSteamElms = true
             }
-            else{
+            else {
                 steamElms.style.opacity = "0"
-                steam.style.opacity = "1"
+                if(isBoiling){steam.style.opacity = "0.6"}
                 microscopeVisiblingSteamElms = false
+
             }
         }
-        else{
+        else {
             steamElms.style.opacity = "0"
-            steam.style.opacity = "1"
+            if(isBoiling){steam.style.opacity = "0.6"}
             microscopeVisiblingSteamElms = false
         }
+    }
+    else{
+        steam.style.opacity = "0"
+        steamElms.style.opacity = "0"
     }
 }

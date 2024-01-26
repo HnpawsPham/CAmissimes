@@ -167,6 +167,8 @@ dropper.addEventListener("dblclick", function () {
             drop.style.animation="dropping 1s ease"
             
             drop.addEventListener("animationend",function(){
+                tookHCl = false
+                tookPhenol = false
                 drop.style.opacity="0"
                 drop.style.animation="none"
             })

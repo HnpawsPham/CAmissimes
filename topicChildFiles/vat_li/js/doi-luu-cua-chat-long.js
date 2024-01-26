@@ -16,13 +16,15 @@ let moveDen = false
 let moveThuocTim = false
 let filled = false;       //check xem đã đổ nước vào cốc chưa
 let moveNhietKe = false;
-let added = false;        //check xem thuốc tím đã bỏ vào cốc chưa
 let moveKieng = false;
-let turnedOn=false;     //check xem đã bật bật lửa chưa
+let turnedOn = false;     //check xem đã bật bật lửa chưa
 let moveBatLua = false;
 let isOnFire = false  //check xem bật bật lửa chưa
 let waterIsBoiled = false //check xem nước sôi chưa
 let t = 20 // biến tạm lưu nhiệt độ
+
+let nhietkeInCoc = false
+let thuoctimInCoc = false
 
 // hiện menu điều khiển
 help.addEventListener('click', function () {
@@ -54,12 +56,12 @@ function bling(obj) {
 }
 
 // custom alert
-$("#alert").hide()
-function tb(ms){
-    $("#alert").show()
-    setTimeout(function(){
-        $("#alert").hide()
-    },ms)
+function tb(ms) {
+    let tb = document.getElementById("alert")
+    tb.style.display = "flex"
+    setTimeout(function () {
+        tb.style.display = "none"
+    }, ms)
 }
 // hàm đợi
 function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
@@ -74,9 +76,9 @@ function moveCtrl(move) {
 
 //di chuyển objs
 function moveObj(obj, move, index) {
-    console.log(isOnFire)
     pourWater()
     boil()
+    TemperControl()
     conditionsToStartEvent()
 
     // bấm lần nữa ngừng di chuyển
@@ -87,6 +89,8 @@ function moveObj(obj, move, index) {
         // lấy pos chuột
         let mX = event.clientX
         let mY = event.clientY
+
+        marginItems()
 
         if (move) {
             obj.style.position = "absolute"
@@ -143,28 +147,57 @@ batlua.addEventListener("dblclick", function () {
         batlua.src = "./assets/batluafire.png"
         turnedOn = true
     }
-    else{
+    else {
         batlua.src = "./assets/batlua.png"
         turnedOn = false
     }
 })
 // đốt đền cồn
 den.addEventListener("mouseenter", function () {
-    if (turnedOn) {
-        den.src = "./assets/dencon.png"
-        isOnFire=true
+    if (batlua.getBoundingClientRect().left > den.getBoundingClientRect().left - 70 && batlua.getBoundingClientRect().right < den.getBoundingClientRect().right + 70) {
+        if (batlua.getBoundingClientRect().bottom <= den.getBoundingClientRect().bottom && batlua.getBoundingClientRect().top > den.getBoundingClientRect().top - 100) {
+            if (turnedOn) {
+                den.src = "./assets/dencon.png"
+                isOnFire = true
+            }
+        }
     }
 })
+
+// khi bỏ vật vào sẽ đi theo bình
+function marginItems() {
+    if (nhietkeInCoc) {
+        nhietke.style.zIndex = "0"
+        nhietke.style.position = "absolute"
+        nhietke.style.top = coc.offsetTop - 35 + 'px'
+        nhietke.style.left = coc.offsetLeft + 50 + 'px'
+    }
+    else{
+        nhietke.style.zIndex = "3"
+        nhietke.style.position = "fixed"
+    }
+    if (thuoctimInCoc) {
+        if(filled){
+            thuoctim.style.zIndex = "0"
+        }
+        thuoctim.style.position = "absolute"
+        thuoctim.style.top = coc.offsetTop + 170 + 'px'
+        thuoctim.style.left = coc.offsetLeft + thuoctim.offsetHeight+ 'px'
+    }
+    else{
+        thuoctim.style.zIndex = "3"
+        thuoctim.style.position = "fixed"
+    }
+}
+
 // đun nước
 async function boil() {
     if (coc.getBoundingClientRect().left > kieng.getBoundingClientRect().left && coc.getBoundingClientRect().right < kieng.getBoundingClientRect().right) {
         if (coc.getBoundingClientRect().top >= kieng.getBoundingClientRect().top - 160 && coc.getBoundingClientRect().bottom < kieng.getBoundingClientRect().top + 100) {
             if (den.getBoundingClientRect().left > kieng.getBoundingClientRect().left && den.getBoundingClientRect().right < kieng.getBoundingClientRect().right) {
                 if (den.getBoundingClientRect().top > kieng.getBoundingClientRect().top && den.getBoundingClientRect().bottom <= kieng.getBoundingClientRect().bottom) {
-                    console.log(isOnFire)
                     if (isOnFire) {
                         if (filled) {
-                            TemperControl()
                             waterIsBoiled = true
                             await sleep(2000)
                             document.getElementById("heat").play()
@@ -178,7 +211,7 @@ async function boil() {
                             tb(3000)
                         }
                     }
-                    else{
+                    else {
                         $("#alert").text("Cần có nhiệt!")
                         tb(3000)
                     }
@@ -191,7 +224,8 @@ async function boil() {
 // nhiệt kế tăng độ
 async function TemperControl() {
     if (nhietke.getBoundingClientRect().left > coc.getBoundingClientRect().left && nhietke.getBoundingClientRect().right < coc.getBoundingClientRect().right) {
-        if (nhietke.getBoundingClientRect().bottom < coc.getBoundingClientRect().bottom) {
+        if (nhietke.getBoundingClientRect().bottom <= coc.getBoundingClientRect().bottom) {
+            nhietkeInCoc = true
             if (waterIsBoiled) {
                 nhietke.querySelector(".thanhchay").style.animation = "increaseTemper 15s ease"
                 nhietke.querySelector(".temperature").style.animation = "moveTemperIndex 15s ease"
@@ -212,12 +246,15 @@ async function TemperControl() {
             }
         }
     }
+    else{
+        nhietkeInCoc  =false
+    }
 }
 // hiện tượng nước có màu thuốc tím
 function mainEvent() {
     water.style.animation = "changeColor 10s ease"
     thuoctim.style.animation = "disappear 10s ease"
-       
+
     water.addEventListener("animationend", function () {
         water.style.backgroundColor = "rgba(92, 5, 109, 0.674)"
         thuoctim.style.opacity = "0"
@@ -229,32 +266,27 @@ async function conditionsToStartEvent() {
     // xét thuốc tím đặt vào cốc
     if (thuoctim.getBoundingClientRect().left > coc.getBoundingClientRect().left + 20 && thuoctim.getBoundingClientRect().right < coc.getBoundingClientRect().right - 20) {
         if (thuoctim.getBoundingClientRect().top > coc.getBoundingClientRect().top + 20 && thuoctim.getBoundingClientRect().bottom < coc.getBoundingClientRect().bottom - 20) {
-            if (!added) {
-                thuoctim.style.transition = "all 0.8s"
-                thuoctim.style.top = coc.getBoundingClientRect().bottom - 60 + "px"
-                added = true
-            }
-            else {
-                thuoctim.style.transition = "none"
-                added = false
-            }
-
+            thuoctimInCoc = true
             if (waterIsBoiled) {
+                await sleep(2000)
                 mainEvent()
             }
         }
+    }
+    else{
+        thuoctimInCoc = false
     }
 }
 
 // lấy nước vào bình
 function pourWater() {
     coc.addEventListener("click", async function () {
-        if (coc.getBoundingClientRect().left > tap.getBoundingClientRect().left - 200 && coc.getBoundingClientRect().right <= tap.getBoundingClientRect().right+ 30) {
+        if (coc.getBoundingClientRect().left > tap.getBoundingClientRect().left - 200 && coc.getBoundingClientRect().right <= tap.getBoundingClientRect().right + 30) {
             if (coc.getBoundingClientRect().top > tap.getBoundingClientRect().bottom && coc.getBoundingClientRect().bottom < tap.getBoundingClientRect().bottom + coc.getBoundingClientRect().height + 300) {
                 if (!filled) {
                     filled = true
                     root.style.setProperty("--flowheight", (Math.round(water.getBoundingClientRect().bottom) - 100 + "px"))
-                  
+
                     flow.style.animation = "flowEffect 4s ease"
                     await sleep(2000)
                     water.style.animation = "fill 2.5s ease"

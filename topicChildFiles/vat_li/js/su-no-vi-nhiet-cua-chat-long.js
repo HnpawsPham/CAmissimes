@@ -19,7 +19,7 @@ const glassContainerWater = document.getElementById("glass-container-water")
 const glassContainerSteam = document.getElementById("slight-steam")
 const iceBucket = document.getElementById("ice-bucket")
 const iceInside = document.getElementById("ice-inside")
-
+//  rượu đông lâu nhất - dầu - nước
 
 let moveOilBottle = false
 let moveWaterBottle = false
@@ -47,7 +47,7 @@ restart.addEventListener("click", function () {
 
 // hướng dẫn thao tác
 help.addEventListener("click", function () {
-    alert("- Click: bắt đầu di chuyển đồ vật\n- Click lần nữa: bỏ đồ vật xuống\n- Di chuột: di chuyển đồ vật\n- Lấy nước vào ấm bằng cách click vào ấm, di chuyển ấm đến vòi nước ở góc phải bên trên rồi click vào ấm lần nữa/n- Bấm 'p' trên bàn phím để đổ nước\n- Bấm 'b' trên bàn phím để sử dụng ấm đun siêu tốc\n   * Có ba lọ:\n     - Màu vàng: lọ dầu\n     - Màu đỏ: lọ rượu\n     - Màu xanh dương: lọ nước")
+    alert("- Click: bắt đầu di chuyển đồ vật\n- Click lần nữa: bỏ đồ vật xuống\n- Di chuột: di chuyển đồ vật\n- Lấy nước vào ấm bằng cách click vào ấm, di chuyển ấm đến vòi nước ở góc phải bên trên rồi click vào ấm lần nữa/n- Bấm 'p' trên bàn phím để đổ nước\n- Bấm 'b' trên bàn phím để sử dụng ấm đun siêu tốc\n   * Có ba lọ:\n     - Màu vàng: lọ dầu\n     - Màu đỏ: lọ rượu\n     - Màu xanh dương: lọ nước\n Sau khi tất cả chất lỏng trong các lọ dãn ra, xô đá sẽ xuất hiện. Click và di xô đá bên trên bể thủy tinh rồi nháy đúp chuột để đổ đá vào bể.")
 })
 
 // custom alert
@@ -77,6 +77,7 @@ function visibleConclusion() {
 }
 // lấy biến css
 const root = document.querySelector(":root")
+console.log(root.style)
 
 //di chuyển objs
 function moveObj(obj, move) {
@@ -92,6 +93,10 @@ function moveObj(obj, move) {
         let mY = event.clientY
 
         steamMargin()
+
+        if(water.style.height == "35px" && wine.style.height == "60px" && oil.style.height == "93px"){
+            iceBucket.style.display = "inline-block"
+        }
 
         if (move) {
             obj.style.position = "absolute"
@@ -127,12 +132,12 @@ wineBottle.addEventListener("click", function () {
     moveObj(wineBottle, moveWineBottle)
 })
 
-iceBucket.addEventListener("click",function(){
+iceBucket.addEventListener("click", function () {
     moveIceBucket = !moveIceBucket
-    moveObj(iceBucket,moveIceBucket)
+    moveObj(iceBucket, moveIceBucket)
 })
 
-iceBucket.addEventListener("dblclick",function(){
+iceBucket.addEventListener("dblclick", function () {
     pourIce()
 })
 
@@ -170,31 +175,31 @@ function getLiquidRisingHeight(bottle) {
 }
 
 // BỎ ĐÁ VÀO BỂ
-function pourIce(){
-    if(iceBucketHasIce){
-        if(iceBucket.getBoundingClientRect().left > glassContainer.getBoundingClientRect().left && iceBucket.getBoundingClientRect().right < glassContainer.getBoundingClientRect().right){
-            if(iceBucket.getBoundingClientRect().bottom < glassContainer.getBoundingClientRect().bottom && iceBucket.getBoundingClientRect().top > glassContainer.getBoundingClientRect().top - iceBucket.getBoundingClientRect().height*2){
+function pourIce() {
+    if (iceBucketHasIce) {
+        if (iceBucket.getBoundingClientRect().left > glassContainer.getBoundingClientRect().left && iceBucket.getBoundingClientRect().right < glassContainer.getBoundingClientRect().right) {
+            if (iceBucket.getBoundingClientRect().bottom < glassContainer.getBoundingClientRect().bottom && iceBucket.getBoundingClientRect().top > glassContainer.getBoundingClientRect().top - iceBucket.getBoundingClientRect().height * 2) {
                 iceBucket.src = "./assets/bucket.png"
                 iceBucketHasIce = false
                 glassContainerSteam.style.opacity = "0"
 
-                if(glassContainerHasWater){
+                if (glassContainerHasWater) {
                     iceInside.style.top = "10px"
                 }
-                else{
+                else {
                     iceInside.style.top = "135px"
                 }
-        
-                iceInside.style.opacity= "1"
+
+                iceInside.style.opacity = "1"
                 glassContainerHasIce = true
                 waterInGlassContainerIsBoiling = false
             }
 
             checkAll()
-        } 
+        }
     }
-    else{
-        notification("Xô không còn đá!",2000)
+    else {
+        notification("Xô không còn đá!", 2000)
     }
 }
 
@@ -271,14 +276,13 @@ function pourWater() {
                                     glassContainerWater.style.height = "150px"
                                     glassContainerHasWater = true
 
-                                    checkAll()
-
                                     if (isBoiling) {
                                         glassContainerSteam.style.opacity = "1"
                                         waterInGlassContainerIsBoiling = true
-                                        checkAll()
                                         steam.style.opacity = "0"
                                     }
+
+                                    checkAll()
                                 })
 
 
@@ -341,7 +345,7 @@ function boilWater() {
 
                 isBoiling = true
                 steam.style.animation = "start-steaming 3s ease"
-                steam.addEventListener("animationend",function(){
+                steam.addEventListener("animationend", function () {
                     steam.style.opacity = "0.8"
                 })
 
@@ -350,8 +354,6 @@ function boilWater() {
 
                 steam.addEventListener("animationend", function () {
                     isBoiling = false
-                    waterInGlassContainerIsBoiling = false
-                    glassContainerSteam.style.opacity = "0"
                     steam.style.opacity = "0"
                     kettleHasWater = false
                 })
@@ -376,51 +378,55 @@ function checkIfInGlassContainer(bottle) {
 }
 
 async function appendAnim(liquid, animName, height, reverse) {
-    if(!reverse){
+    if (!reverse) {
+        console.log(height)
         liquid.style.animation = `${animName} 10s ease`
 
         liquid.addEventListener("animationend", function () {
             liquid.style.height = height + "px"
+            liquid.style.animation = "none"
         })
     }
-    else{
-            liquid.style.animation = `${animName} 10s reverse infinite`
-    
-            await sleep(10000)
+    else {
+        liquid.style.animation = `${animName} 10s cubic-bezier(0.45, 0.25, 0.60, 0.95) reverse`
+
+        liquid.addEventListener("animationend", function () {
             liquid.style.animation = "none"
-            liquid.style.height = "0px"
-            
+            liquid.style.height = height + "px"
+
             visibleConclusion()
+        })
     }
 }
 
 function liquidBloom(bottle) {
     if (glassContainerHasWater) {
         if (waterInGlassContainerIsBoiling) {
-
             if (bottle == wineBottle) {
-                appendAnim(wine, "wine-rising", 50,false)
+                appendAnim(wine, "wine-rising", 60, false)
             }
             else if (bottle == waterBottle) {
-                appendAnim(water, "water-rising", 20,false)
+                appendAnim(water, "water-rising", 35, false)
             }
             else if (bottle == oilBottle) {
-                appendAnim(oil, "oil-rising", 90,false)
+                appendAnim(oil, "oil-rising", 93, false)
             }
-
         }
-        else if(glassContainerHasIce){
+        else if (glassContainerHasIce) {
             if (bottle == wineBottle) {
-                appendAnim(wine, "wine-rising", 50, true)
+                root.style.setProperty("--wine-height-start", 25 + "px")
+                appendAnim(wine, "wine-rising", 25, true)
             }
             else if (bottle == waterBottle) {
-                appendAnim(water, "water-rising", 20 ,true)
+                root.style.setProperty("--water-height-start", 0 + "px")
+                appendAnim(water, "water-rising", 0, true)
             }
             else if (bottle == oilBottle) {
-                appendAnim(oil, "oil-rising", 90, true)
+                root.style.setProperty("--oil-height-start", 10 + "px")
+                appendAnim(oil, "oil-rising", 10, true)
             }
         }
-        else {
+        else if (!waterInGlassContainerIsBoiling && !glassContainerHasIce) {
             notification("Nước ở nhiệt độ bình thường, không có gì thay đổi", 5000)
         }
     }

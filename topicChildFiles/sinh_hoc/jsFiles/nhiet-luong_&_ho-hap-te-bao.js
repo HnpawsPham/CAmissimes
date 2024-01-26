@@ -53,12 +53,13 @@ function sleep(ms) {
 }
 
 // thông báo
-$("#alert").hide()
+const tb = document.getElementById("alert")
+tb.style.display = "none"
 
 const thong_bao = function (milisec) {
-    $("#alert").show()
+    tb.style.display = "flex"
     setTimeout(function () {
-        $("#alert").hide()
+        tb.style.display = "none"
     }, milisec)
 }
 

@@ -8,6 +8,8 @@ const coc = document.querySelectorAll(".childContainer")
 const flow = document.getElementById("flow")
 const dye = document.querySelectorAll(".dye")
 const tap = document.getElementById("tap")
+const restart = document.getElementById("restart")
+const tb = document.getElementById("alert")
 
 let moveDropper = false   //cho dropper di chuyển
 let moveKnife = false         //cho dao mổ di chuyển
@@ -18,8 +20,8 @@ let cocHasWater = [false, false]       //check cốc đã có nước chưa
 let isRotated = false         //check xem bình nước đã nghiêng chưa
 let take = 0      //check xem đổ nước mấy lần r
 let isDyed = [false, false]      //check xem hoa đã được nhuộm chưa
-let waterColor = ["", ""]
-let startEvent = false        //check xem bắt đầu cho hoa nhuộm đc chưa
+let cocIsDyed = [false, false] // check nước đã nhuộm chưa
+let roseInCoc = [false, false]
 
 // hiện controller menu
 help.addEventListener("click", function () {
@@ -29,60 +31,113 @@ $("#alert").hide()
 
 const root = document.querySelector(":root")
 
+// custom alert
+function notification(content, milisec) {
+    tb.style.display = "flex"
+    tb.innerHTML = content
+    setTimeout(function () {
+        tb.style.display = "none"
+    }, milisec)
+
+}
+
 // hàm đợi
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+// làm lại thí nghiệm
+restart.addEventListener("click", function () {
+    location.reload()
+})
+
+function changeColorEffect(liquid, i) {
+    console.log(i)
+
+    liquid.style.backgroundColor = colorPicker.value
+    liquid.style.animation = "waterColored 2s ease"
+    liquid.addEventListener("animationend", async function () {
+        liquid.style.animation = "none"
+        cocIsDyed[i] = true
+        return
+    })
+}
+
 // đổi phẩm màu cho nước
 changeWaterColor()
-
 function changeWaterColor() {
     dropper.addEventListener("dblclick", function () {
         root.style.setProperty("--dropperColor", colorPicker.value)
         for (let liquid of water) {
             if (dropper.getBoundingClientRect().left > liquid.getBoundingClientRect().left && dropper.getBoundingClientRect().right < liquid.getBoundingClientRect().right) {
                 if (dropper.getBoundingClientRect().bottom < liquid.getBoundingClientRect().bottom) {
-                    liquid.style.animation = "waterColored 2s ease"
-                    liquid.addEventListener("animationend", async function () {
-                        liquid.style.backgroundColor = colorPicker.value
-                        liquid.style.animation = "none"
-                        startEvent = true
-                        console.log(startEvent)
-                        return
-                    })
+                    if (liquid == water[0]) {
+                        if (!cocIsDyed[0]) {
+                            changeColorEffect(liquid, 0)
+                        }
+                        else {
+                            notification("Đã nhuộm cốc này", 2000)
+                        }
+                    }
+                    else if (liquid == water[1]) {
+                        if (!cocIsDyed[1]) {
+                            changeColorEffect(liquid, 1)
+                        }
+                        else {
+                            notification("Đã nhuộm cốc này", 2000)
+                        }
+                    }
                 }
             }
         }
     })
 }
 // hiệu ứng hoa nhuộm màu
-async function mainEvent(i) {
-    for (let j=0; j< coc.length; j++) {
-    
-        if (roses[i].getBoundingClientRect().left >= coc[j].getBoundingClientRect().left - 20 && roses[i].getBoundingClientRect().right <= coc[j].getBoundingClientRect().right + 40) {
-            if (roses[i].getBoundingClientRect().bottom <= coc[j].getBoundingClientRect().bottom && cocHasWater[j] && !isDyed[i]) {
-               console.log(startEvent)
-                if (startEvent) {
-                    if(isCut[i]){
-                        isDyed[i] = true
-                        cocHasWater[j]=false
-                        roses[i].style.zIndex = "-2"
-                        dye[i].style.opacity = "0.2"
-                        dye[i].style.backgroundColor = coc[j].querySelector(".water").style.backgroundColor
-                        dye[i].style.animation = "dyeing 7s ease"
-                        dye[i].addEventListener("animationend", function () {
-                            dye[i].style.backgroundColor = coc[j].querySelector(".water").style.backgroundColor
-                            dye[i].style.height = "90px"
-                            dye[i].style.top = "5px"
-                            visibleConclusion()
-                        })
-                    } 
-                    else{
-                        alert("Cắt cuống xéo để cây hút nước tốt hơn!")
+async function mainEvent() {
+    for (let i = 0; i < roses.length; i++) {
+        for (let j = 0; j < coc.length; j++) {
+
+            if (roses[i].getBoundingClientRect().left >= coc[j].getBoundingClientRect().left - 20 && roses[i].getBoundingClientRect().right <= coc[j].getBoundingClientRect().right + 30) {
+                if (roses[i].getBoundingClientRect().bottom <= coc[j].getBoundingClientRect().bottom + 20 && roses[i].getBoundingClientRect().top > coc[j].getBoundingClientRect().top - 300) {
+                    roses[i].addEventListener("click", function () {
+                        if (!roseInCoc[i]) {
+                            roses[i].style.zIndex = "-2"
+                            roseInCoc[i] = true
+                        }
+                        else {
+                            roses[i].style.zIndex = "2"
+                            roseInCoc[i] = false
+                        }
+                    })
+                    if (roseInCoc[i]) {
+                        if (cocHasWater[j]) {
+                            if (isCut[j]) {
+                                if (cocIsDyed[j]) {
+                                    if (!isDyed[i]) {
+                                        dye[i].style.opacity = "0.2"
+                                        dye[i].style.backgroundColor = coc[j].querySelector(".water").style.backgroundColor
+                                        dye[i].style.animation = "dyeing 7s ease"
+                                        dye[i].addEventListener("animationend", function () {
+                                            dye[i].style.backgroundColor = coc[j].querySelector(".water").style.backgroundColor
+                                            dye[i].style.height = "90px"
+                                            dye[i].style.top = "5px"
+                                            isDyed[i] = true
+                                            visibleConclusion()
+                                        })
+                                    }
+                                }
+                                else {
+                                    dye[i].style.opacity = "0"
+                                }
+                            }
+                            else {
+                                notification("Cắt cuống xéo để cây hút nước tốt hơn!", 2000)
+                            }
+                        }
+                        else {
+                            notification("Cắt cuống thân cây trước!", 2000)
+                        }
                     }
-                }
-                else if(!startEvent){
-                    alert("Nhuộm màu trước để màu dễ hoà tan trong nước hơn!")
                 }
             }
         }
@@ -116,6 +171,7 @@ function moveObj(obj, move) {
         // lấy pos chuột
         let mX = event.clientX
         let mY = event.clientY
+        mainEvent()
 
         if (move) {
             obj.style.position = "absolute"
@@ -172,7 +228,6 @@ function cutRose(i) {
                 if (!isCut[i]) {
                     roses[i].querySelector("img").src = "./assets/cut.png"
                     isCut[i] = true;
-                    console.log(isCut)
                 }
             }
         }
@@ -187,10 +242,9 @@ knife.addEventListener("click", function () {
 // cho hoa hồng trắng di chuyển
 for (let i = 0; i < roses.length; i++) {
     cutRose(i)
-    roses[i].style.zIndex="1"
+    roses[i].style.zIndex = "1"
 
     roses[i].addEventListener("click", function () {
-        mainEvent(i)
         moveRose[i] = moveCtrl(moveRose[i])
         moveObj(roses[i], moveRose[i])
     })
@@ -199,7 +253,7 @@ for (let i = 0; i < roses.length; i++) {
 // di chuyển cốc
 for (let i = 0; i < coc.length; i++) {
     coc[i].addEventListener("click", function () {
-        coc[i].style.width="230px"
+        coc[i].style.width = "230px"
 
         getWater(coc[i], i)
         moveCoc[i] = moveCtrl(moveCoc[i])
@@ -209,17 +263,17 @@ for (let i = 0; i < coc.length; i++) {
 
 
 // hiện kết luận
-function visibleConclusion(){
-    document.getElementById("conclu").style.opacity="1"
-    let isOn=false
-    document.getElementById("conclu").addEventListener("click",function(){
-        if(!isOn){
-            document.getElementById("text").style.visibility="visible"
-            isOn=true
+function visibleConclusion() {
+    document.getElementById("conclu").style.opacity = "1"
+    let isOn = false
+    document.getElementById("conclu").addEventListener("click", function () {
+        if (!isOn) {
+            document.getElementById("text").style.visibility = "visible"
+            isOn = true
         }
-        else{
-            document.getElementById("text").style.visibility="hidden"
-            isOn=false
+        else {
+            document.getElementById("text").style.visibility = "hidden"
+            isOn = false
         }
     })
 }

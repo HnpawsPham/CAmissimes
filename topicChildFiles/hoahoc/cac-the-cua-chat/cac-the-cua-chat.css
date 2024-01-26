@@ -67,6 +67,7 @@ body{
     background-color: rgba(245, 245, 245, 0.247);
 }
 #elm-inside{
+    z-index: 2;
     opacity: 0;
     position: fixed;
     width: 150px;

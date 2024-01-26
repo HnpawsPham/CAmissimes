@@ -1,4 +1,4 @@
-
+const tb = document.getElementById("alert")
 const small = document.getElementById("small")
 const medium = document.getElementById("medium")
 const large = document.querySelector(".large")
@@ -32,13 +32,27 @@ function sleep(ms) {
 }
 
 // thông báo
-$("#alert").hide()
-
 const thong_bao = function (milisec) {
-    $("#alert").show()
+    tb.style.display = "flex"
     setTimeout(function () {
-        $("#alert").hide()
+        tb.style.display = "none"
     }, milisec)
+}
+
+// hiện kết luận
+function visibleConclusion() {
+    document.getElementById("conclu").style.opacity = "1"
+    let isOn = false
+    document.getElementById("conclu").addEventListener("click", function () {
+        if (!isOn) {
+            document.getElementById("text").style.visibility = "visible"
+            isOn = true
+        }
+        else {
+            document.getElementById("text").style.visibility = "hidden"
+            isOn = false
+        }
+    })
 }
 
 // hiệu ứng bling
@@ -143,6 +157,7 @@ async function isInBowl(obj, startEvent) {
                         await mediumSplash(obj, startEvent)
                         startEvent = true
                     }
+                    visibleConclusion()
                 }
             }
         }
