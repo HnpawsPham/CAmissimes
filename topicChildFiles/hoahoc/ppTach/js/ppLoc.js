@@ -11,6 +11,7 @@ const help = document.getElementById("help")
 const flow = document.getElementById("flow")
 const water = document.getElementById("water")
 const liquid = document.getElementById("liquid")
+const tb = document.getElementById("alert")
 
 let moveLo = false    //cho lọ di chuyển
 let movePheu = false  //cho phễu di chuyển
@@ -24,9 +25,9 @@ $("#alert").hide();
 
 // hàm thông báo
 const thong_bao = function (millisec) {
-    $("#alert").show()
+    tb.style.display = "flex"
     setTimeout(function () {
-        $('#alert').hide()
+        tb.style.display = "none"
     }, millisec)
 }
 
@@ -53,7 +54,7 @@ function sleep(ms) {
 
 // điều khiển menu
 help.addEventListener("click", function () {
-    alert("Click chuột trái: Tương tác với đồ vật\nClick chuột trái lần nữa: Bỏ vật lại")
+    alert("Click chuột trái: Tương tác với đồ vật\nClick chuột trái lần nữa: Bỏ vật lại\n -Thao tác: \n  +Click vào phễu và di chuột lại gần miệng lọ, sau đó click lần nữa\n  + Click vào giấy lọc(màu trắng) và di chuột lại gần phễu rồi click vào\n  + Click vào cốc hõn hợp lưu huỳnh và nước (màu vàng) rồi di chuột lại gần phía bên trên phễu, khi không thể đổ hỗn hợp, hỗn hợp sẽ thu nhỏ lại, khi có thể đổ hõn hợp, hỗn hợp sẽ về kích thước ban đầu lại. Nháy đúp chuột để đổ hỗn hợp vào phễu \n   * Có thể để lọ ở đế (bên phải) hoặc để ngay trên bàn (bên trái)")
 })
 
 // hiệu ứng bling

@@ -4,7 +4,8 @@ body{
     overflow: hidden;
 }
 #anatomy{ 
-    margin-top: -431px;
+    position: fixed;
+    margin: 30px 0 0 0px;
     z-index: -1;
     width: 300px;
 }
@@ -19,7 +20,8 @@ body{
 #lungs{
     opacity: 0.7;
     z-index: 0;
-    margin: 240px 0 0 648px;
+    position: fixed;
+    margin: 250px 0 0 650px;
     width: 178px;
     height: 210px;
     filter: brightness(100%);
@@ -27,7 +29,8 @@ body{
 }
 #baothuoc{
     width: 200px;
-    margin: 320px 10px 500px 1000px;
+    position: fixed;
+    margin: 300px 0 0 1100px;
 }
 #thuocla{
     position: absolute;
@@ -38,7 +41,8 @@ body{
 #instr{
     color: white;
     font-family: spline;
-    margin: -680px 0 0 20px;
+    position: fixed;
+    margin: 10px 0 0 20px;
 }
 span{
     cursor: pointer;
@@ -47,9 +51,10 @@ span:hover{
     color: rgb(81, 81, 81);
 }
 #skip{
+    position: fixed;
     cursor: pointer;
     color: white;
-    margin: -160px 0 0 1350px;
+    margin: 10px 0 0 90vw;
 }
 #skip:hover{
     color: rgb(161, 159, 159);
@@ -57,5 +62,5 @@ span:hover{
 #mouth{
     position: fixed;
     width: 27px;
-    margin: 140px 0 0 736px;
+    margin: 145px 0 0 736px;
 }

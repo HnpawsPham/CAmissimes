@@ -128,7 +128,7 @@
         bottom: 60px;
     }
     to{
-       bottom: 220px;
+       bottom: 180px;
     }
 }
 @keyframes changeColor {

@@ -15,12 +15,13 @@ const binh = document.querySelectorAll(".binh")
 const noi = document.getElementById("noi")
 const nap = document.getElementById("nap")
 const bep = document.getElementById("bep")
+const conclusion = document.getElementById("conclusion")
 
 let moveXuc = false   //cho phép đồ xúc di chuyển
 let moveNap = false       //cho phép nắp nồi di chuyển
 let moveNoi = false       //cho phép nồi di chuyển
 let moveBong = false  //cho phép bông gòn di chuyển
-let moveNhietke = false   //cho phép nhiệt kế di chuyển
+let moveNhietke = [false, false]   //cho phép nhiệt kế di chuyển
 let isShovelled = false   //check xem đồ xúc đã xúc đậu chưa
 let i = 0     //chỉ số trạng thái của thùng đậu
 let index = -1     //chỉ số thứ tự của bông gòn
@@ -28,9 +29,10 @@ let isCook = false    //xem đậu đã được nấu chưa
 let potCookedBean = false     //check xem nồi có đậu chín k
 let time = 5      //tgian nấu đậu
 let beansInPot = false    //check xem trong nồi có đậu k
-let binhcodauchin = false    //check xem bình có đậu chín k
+let binhcodauchin = [false, false]   //check xem bình có đậu chín k
 let xucCookedBean = false //check xem đồ xúc có đang xúc đậu chín k
-let isIncreased = false       //check xem nhiệt độ của nhiệt kế đã tăng chưa
+let isIncreased = [false, false]     //check xem nhiệt độ của nhiệt kế đã tăng chưa
+let isIncreasing = [false, false]        //check xem nhiệt độ của nhiệt kế có đang tăng k
 
 // check xem bỏ đậu vào bình chưa
 let haveBeans = {
@@ -161,10 +163,15 @@ noi.addEventListener("click", function () {
 for (let a = 0; a < nhietke.length; a++) {
     nhietke[a].addEventListener("click", function () {
         nhietke[a].style.transform = "rotate(-2deg)"
-        moveNhietke = moveCtrl(moveNhietke)
-        moveObj(nhietke[a], moveNhietke)
+        console.log(a)
+        if (!isIncreasing[Math.abs(a-1)]) {
+            moveNhietke[a] = moveCtrl(moveNhietke[a])
+            moveObj(nhietke[a], moveNhietke[a])
+        }
     })
 }
+
+
 bong.addEventListener("click", function () {
     // bấm vào thì thêm bông gòn
     try {
@@ -236,38 +243,38 @@ function pourBeans() {
     if (xuc.getBoundingClientRect().bottom < binh[0].getBoundingClientRect().bottom && xuc.getBoundingClientRect().bottom > binh[0].getBoundingClientRect().top - 50) {
         if (xuc.getBoundingClientRect().right > binh[0].getBoundingClientRect().left + 40 && xuc.getBoundingClientRect().left < binh[0].getBoundingClientRect().right) {
             // đồ xúc đã có đậu đổ đậu sống vào bình
-            if (!placedBong[0] && !haveBeans[0] && isShovelled && !xucCookedBean && !binhcodauchin) {
+            if (!placedBong[0] && !haveBeans[0] && isShovelled && !xucCookedBean && !binhcodauchin[0]) {
                 xuc.src = "./assets/doxuc.png"
                 binh[0].src = "./assets/binh_chua_dau.png"
                 haveBeans[0] = true
                 isShovelled = false
             }
             // đồ xúc chưa có đậu lấy đậu ra khỏi bình
-            else if (haveBeans[0] && !isShovelled && !placedBong[0] && !xucCookedBean && !binhcodauchin) {
+            else if (haveBeans[0] && !isShovelled && !placedBong[0] && !xucCookedBean && !binhcodauchin[0]) {
                 xuc.src = "./assets/daxucdau.png"
                 binh[0].src = "./assets/binh.png"
                 haveBeans[0] = false
                 isShovelled = true
             }
             // đồ xúc chứa đậu chín bỏ vào bình
-            else if (!haveBeans[0] && isShovelled && !placedBong[0] && xucCookedBean && !binhcodauchin) {
+            else if (!haveBeans[0] && isShovelled && !placedBong[0] && xucCookedBean && !binhcodauchin[0]) {
                 xuc.src = "./assets/doxuc.png"
                 binh[0].src = "./assets/binhdauchin.png"
                 haveBeans[0] = true
                 isShovelled = false
                 xucCookedBean = false
                 cookedBean[0] = true
-                binhcodauchin = true
+                binhcodauchin[0] = true
             }
             // lấy đậu chín ra khỏi bình
-            else if (haveBeans[0] && !isShovelled && !placedBong[0] && !xucCookedBean && binhcodauchin) {
+            else if (haveBeans[0] && !isShovelled && !placedBong[0] && !xucCookedBean && binhcodauchin[0]) {
                 xuc.src = "./assets/xucdauchin.png"
                 binh[0].src = "./assets/binh.png"
                 haveBeans[0] = false
                 isShovelled = true
                 xucCookedBean = true
                 cookedBean[0] = false
-                binhcodauchin = false
+                binhcodauchin[0] = false
             }
         }
     }
@@ -275,38 +282,38 @@ function pourBeans() {
     if (xuc.getBoundingClientRect().bottom < binh[1].getBoundingClientRect().bottom && xuc.getBoundingClientRect().bottom > binh[1].getBoundingClientRect().top - 50) {
         if (xuc.getBoundingClientRect().right > binh[1].getBoundingClientRect().left + 40 && xuc.getBoundingClientRect().left < binh[1].getBoundingClientRect().right) {
             // đồ xúc đã có đậu đổ đậu sống vào bình
-            if (!haveBeans[1] && isShovelled && !placedBong[1] && !xucCookedBean && !binhcodauchin) {
+            if (!haveBeans[1] && isShovelled && !placedBong[1] && !xucCookedBean && !binhcodauchin[1]) {
                 xuc.src = "./assets/doxuc.png"
                 binh[1].src = "./assets/binh_chua_dau.png"
                 haveBeans[1] = true
                 isShovelled = false
             }
             // đồ xúc chưa có đậu lấy đậu sống ra khỏi bình
-            else if (haveBeans[1] && !isShovelled && !placedBong[1] && !xucCookedBean && !binhcodauchin) {
+            else if (haveBeans[1] && !isShovelled && !placedBong[1] && !xucCookedBean && !binhcodauchin[1]) {
                 xuc.src = "./assets/daxucdau.png"
                 binh[1].src = "./assets/binh.png"
                 haveBeans[1] = false
                 isShovelled = true
             }
             // đồ xúc chứa đậu chín bỏ vào bình
-            else if (!haveBeans[1] && isShovelled && !placedBong[1] && xucCookedBean && !binhcodauchin) {
+            else if (!haveBeans[1] && isShovelled && !placedBong[1] && xucCookedBean && !binhcodauchin[1]) {
                 xuc.src = "./assets/doxuc.png"
                 binh[1].src = "./assets/binhdauchin.png"
                 haveBeans[1] = true
                 isShovelled = false
                 xucCookedBean = false
                 cookedBean[1] = true
-                binhcodauchin = true
+                binhcodauchin[1] = true
             }
             // lấy đậu chín ra khỏi bình
-            else if (haveBeans[1] && !isShovelled && !placedBong[1] && !xucCookedBean && binhcodauchin) {
+            else if (haveBeans[1] && !isShovelled && !placedBong[1] && !xucCookedBean && binhcodauchin[1]) {
                 xuc.src = "./assets/xucdauchin.png"
                 binh[1].src = "./assets/binh.png"
                 haveBeans[1] = false
                 isShovelled = true
                 xucCookedBean = true
                 cookedBean[1] = false
-                binhcodauchin = false
+                binhcodauchin[1] = false
             }
         }
     }
@@ -355,6 +362,8 @@ function putBeanstoPot() {
                     beansInPot = false
                     potCookedBean = false
                     xucCookedBean = true
+                    isCook = false
+                    time = 5
                 }
                 // bỏ đậu chín vào nồi bằng đồ xúc chứa đậu chín
                 else if (!isCovered() && !beansInPot && isShovelled && xucCookedBean && !potCookedBean) {
@@ -364,6 +373,8 @@ function putBeanstoPot() {
                     beansInPot = true
                     potCookedBean = true
                     xucCookedBean = false
+                    isCook = true
+                    time = 0
                 }
             }
         }
@@ -385,23 +396,27 @@ function isCovered() {
 async function cookBeans() {
     if (noi.getBoundingClientRect().bottom < bep.getBoundingClientRect().top + 20 && noi.getBoundingClientRect().bottom > bep.getBoundingClientRect().top - 10) {
         if (noi.getBoundingClientRect().left > bep.getBoundingClientRect().left && noi.getBoundingClientRect().right < bep.getBoundingClientRect().right) {
-            document.getElementById("boil").play()
-            if (time == 5) {
-                for (let t = 5; t >= 0; t--) {
-                    document.addEventListener("click",function(){{
-                        t=time+1
-                    }})
-                    $("#alert").text("Vui lòng chờ " + t + " giây (Thời gian thực: khoảng 10-15 phút)")
-                    time--
-                    thong_bao(5000)
-                    await sleep(1000)
+            if(!isCook && beansInPot && !potCookedBean){
+                document.getElementById("boil").play()
+                if (time == 5) {
+                    for (let t = 5; t >= 0; t--) {
+                        document.addEventListener("click", function () {
+                            {
+                                t = time + 1
+                            }
+                        })
+                        $("#alert").text("Vui lòng chờ " + t + " giây (Thời gian thực: khoảng 10-15 phút)")
+                        time--
+                        thong_bao(5000)
+                        await sleep(1000)
+                    }
+                    time = 0
+                    noi.src = "./assets/cooked.png"
+                    $("#alert").text("Đậu đã được nấu chín!")
+                    thong_bao(4000)
+                    isCook = true
+                    potCookedBean = true
                 }
-                time = 0
-                noi.src = "./assets/cooked.png"
-                $("#alert").text("Đậu đã được nấu chín!")
-                thong_bao(4000)
-                isCook = true
-                potCookedBean = true
             }
         }
     }
@@ -411,26 +426,18 @@ function pot_to_jar(jar, index) {
     noi.addEventListener("dblclick", function (event) {
         if (noi.getBoundingClientRect().top > jar.getBoundingClientRect().top - 200 && noi.getBoundingClientRect().bottom < jar.getBoundingClientRect().bottom) {
             if (noi.getBoundingClientRect().left > jar.getBoundingClientRect().left - 100 && noi.getBoundingClientRect().right < jar.getBoundingClientRect().right + 200) {
-
-                event.stopPropagation()
                 // đổ đậu chín vào bình
-                if (beansInPot && isCook && !binhcodauchin && !haveBeans[jar]) {
+                if (potCookedBean && beansInPot && isCook && !binhcodauchin[index] && !haveBeans[index]) {
                     jar.src = "./assets/binhdauchin.png"
                     beansInPot = false
                     noi.src = "./assets/noi.png"
+                    potCookedBean = false
                     cookedBean[index] = true
-                    binhcodauchin = true
+                    binhcodauchin[index] = true
                     haveBeans[index] = true
+                    isCook = false
+                    time=5
                 }
-                else if (!beansInPot && isCook && binhcodauchin && haveBeans[jar]) {
-                    jar.src = "./assets/binh.png"
-                    beansInPot = true
-                    noi.src = "./assets/cooked.png"
-                    cookedBean[index] = false
-                    binhcodauchin = false
-                    haveBeans[index] = false
-                }
-
             }
 
         }
@@ -440,28 +447,32 @@ function pot_to_jar(jar, index) {
 async function putNhietKe(nhietke, jar, j) {
     if (nhietke.getBoundingClientRect().left > jar.getBoundingClientRect().left + 10 && nhietke.getBoundingClientRect().right < jar.getBoundingClientRect().right - 10) {
         if (nhietke.getBoundingClientRect().bottom <= jar.getBoundingClientRect().bottom && nhietke.getBoundingClientRect().top > jar.getBoundingClientRect().top - 200) {
-            console.log(haveBeans[j])
             if (haveBeans[j]) {
                 // hiện nhiệt độ
                 nhietke.querySelector(".temperature").classList.remove("hide")
-            }
-            // tăng độ nếu đậu chính
-            if (!cookedBean[j] && haveBeans[j] && !isIncreased && placedBong[j]) {
-                isIncreased = true
-                nhietke.querySelector(".thanhchay").style.animation = "increaseTemper 15s ease"
-                nhietke.querySelector(".temperature").style.animation="moveUp 15s ease"
-                // tăng số nhiệt độ
-                for (let temper = 20; temper < 41; temper++) {
-                    nhietke.querySelector(".temperature > p").innerText = temper+"°"
-                    await sleep(630)
+                // tăng độ nếu đậu chính
+                if (!cookedBean[j]&& !isIncreased[j] && placedBong[j] && !isIncreasing[j]) {
+                    isIncreasing[j] = true
+
+                    nhietke.querySelector(".thanhchay").style.animation = "increaseTemper 15s ease"
+                    nhietke.querySelector(".temperature").style.animation = "moveUp 15s ease"
+
+                    // tăng số nhiệt độ
+                    for (let temper = 20; temper < 41; temper++) {
+                        nhietke.querySelector(".temperature > p").innerText = temper + "°"
+                        await sleep(630)
+                    }
+                    // xogn anim tăng nhiệt độ thì giữ nguên trạng thái
+                    nhietke.querySelector(".thanhchay").addEventListener("animationend", function () {
+                        nhietke.querySelector(".thanhchay").style.height = "250px"
+                        nhietke.querySelector(".temperature").style.bottom = "230px"
+                        isIncreased[j] = true
+                        isIncreasing[j] = false
+                        visibleConclusion()
+                    })
                 }
-                // xogn anim tăng nhiệt độ thì giữ nguên trạng thái
-                nhietke.querySelector(".thanhchay").addEventListener("animationend", function () {
-                    nhietke.querySelector(".thanhchay").style.height = "250px"
-                    nhietke.querySelector(".temperature").style.bottom="230px"
-                    visibleConclusion()
-                })
             }
+
         }
     }
     return true
@@ -469,17 +480,18 @@ async function putNhietKe(nhietke, jar, j) {
 
 
 // hiện kết luận
-function visibleConclusion(){
-    document.getElementById("conclu").style.opacity="1"
-    let isOn=false
-    document.getElementById("conclu").addEventListener("click",function(){
-        if(!isOn){
-            document.getElementById("text").style.visibility="visible"
-            isOn=true
+function visibleConclusion() {
+    document.getElementById("conclu").style.opacity = "1"
+    let isOn = false
+    document.getElementById("conclu").addEventListener("click", function () {
+        if (!isOn) {
+            conclusion.play()
+            document.getElementById("text").style.visibility = "visible"
+            isOn = true
         }
-        else{
-            document.getElementById("text").style.visibility="hidden"
-            isOn=false
+        else {
+            document.getElementById("text").style.visibility = "hidden"
+            isOn = false
         }
     })
 }

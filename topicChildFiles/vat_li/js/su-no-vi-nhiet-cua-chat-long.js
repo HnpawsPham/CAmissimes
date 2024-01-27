@@ -31,6 +31,7 @@ let kettleIsOpen = false
 let kettleHasWater = false
 let kettleIsRotated = false
 let isBoiling = false
+let isPouring = false
 let glassContainerHasWater = false
 let waterInGlassContainerIsBoiling = false
 let iceBucketHasIce = true
@@ -141,9 +142,10 @@ iceBucket.addEventListener("dblclick", function () {
 
 kettle.addEventListener("click", function () {
     pourWater()
-
-    moveKettle = !moveKettle
-    moveObj(kettle, moveKettle)
+    if(!isPouring){
+        moveKettle = !moveKettle
+        moveObj(kettle, moveKettle)
+    }
 })
 
 kettle.addEventListener("dblclick", function () {
@@ -227,6 +229,7 @@ function getWater(obj) {
 
 async function waterAnim() {
     kettle.style.position = "fixed"
+    isPouring = true
     kettle.style.top = "0"
     kettle.style.left = "0"
     kettle.style.margin = "70px 0 0 90vw"
@@ -239,6 +242,7 @@ async function waterAnim() {
             root.style.setProperty("--flowHeight", 0 + "px")
             flow.style.animation = "none"
             kettleHasWater = true
+            isPouring = false
         })
     })
 }
@@ -252,6 +256,8 @@ function pourWater() {
                         if (kettle.getBoundingClientRect().bottom < glassContainer.getBoundingClientRect().bottom && kettle.getBoundingClientRect().top < glassContainer.getBoundingClientRect().top - 200) {
                             kettle.style.transform = "rotate(-90deg)"
                             kettleIsRotated = true
+                            moveKettle = false
+                            isPouring = true
                             steamMargin()
 
                             root.style.setProperty("--pourWaterHeight", (glassContainer.getBoundingClientRect().bottom - kettle.getBoundingClientRect().bottom - 18 + "px"))
@@ -272,6 +278,7 @@ function pourWater() {
                                 glassContainerWater.style.animation = "liquid-rising 2s ease"
                                 glassContainerWater.addEventListener("animationend", function () {
                                     glassContainerWater.style.height = "150px"
+                                    isPouring = false
                                     glassContainerHasWater = true
 
                                     if (isBoiling) {
@@ -377,7 +384,6 @@ function checkIfInGlassContainer(bottle) {
 
 async function appendAnim(liquid, animName, height, reverse) {
     if (!reverse) {
-        console.log(height)
         liquid.style.animation = `${animName} 10s ease`
 
         liquid.addEventListener("animationend", function () {

@@ -28,7 +28,6 @@ h1{
 }
 button{
     position: fixed;
-    margin: 20px 0 0 90vw;
     background-color: rgba(247, 247, 247, 0.889);
     border: none;
     border-radius: 20px;

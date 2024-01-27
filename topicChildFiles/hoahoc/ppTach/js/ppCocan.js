@@ -17,10 +17,16 @@ let isHotEnough=false //đèn đã lên lửa
 let turnBatLua=false //bật bật lửa
 let bucketIsReady=false //xô đã đặt vào đế
 let lightIsReady=false  //đèn đã đặt vào đế
+let soundPlayed = false
+
+// tạo giọng nói cho kết luận
+const mouth = window.speechSynthesis
+const voices = mouth.getVoices()
+const speech = new SpeechSynthesisUtterance(document.getElementById("text").innerHTML)
 
 // hiện menu điều khiển
 function showControll(){
-    alert("Click chuột trái: tương tác với vật\nLăn chuột: Kích hoạt bật lửa\n*Thao tác:\n -Click vào bật lửa rồi lăn chuột để kích hoạt bật lửa\n -Di chuyển bật lửa lại gần đèn cồn để đốt đèn\n -Đặt cốc trên đế và đèn cồn dưới đế")
+    alert("Click chuột trái: cầm vật lên và bắt đầu di chuyển vật\nLăn chuột (scroll): bật bật lửa\n*Thao tác:\n -Click vào bật lửa rồi lăn chuột để kích hoạt bật lửa\n -Di chuyển bật lửa lại gần đèn cồn để đốt đèn\n -Đặt cốc trên đế và đèn cồn dưới đế")
 }
 // hiện kết luận
 function visibleConclusion(){
@@ -28,6 +34,7 @@ function visibleConclusion(){
     let isOn=false
     document.getElementById("conclu").addEventListener("click",function(){
         if(!isOn){
+            mouth.speak(speech)
             document.getElementById("text").style.visibility="visible"
             isOn=true
         }
@@ -85,15 +92,20 @@ function moveObj(obj,move){
         })
         // phản ứng bốc hơi
         if(bucketIsReady && lightIsReady &isHotEnough && moveBucket==false && moveLight==false){
-            await sleep(100)
-            sound.play()
             ncmuoi.style.animation="dry 12s ease-out"
             steam.style.animation="disappear 10s ease-out"
+
             ncmuoi.style.height="0px"
             ncmuoi.style.width="160px"
+
+            await sleep(100)
+            if(!soundPlayed){
+                sound.play()
+                soundPlayed = true
+            }
             steam.addEventListener("animationend",function(){
-                sound.pause()
                 bucketIsReady=false
+                lightIsReady = false
                 visibleConclusion()
             })
         }
@@ -107,7 +119,9 @@ bucket.addEventListener("click",function(){
     else{
         moveBucket=true
     }
-    moveObj(bucket,moveBucket)
+    if(!bucketIsReady){
+        moveObj(bucket,moveBucket)
+    }
 })
 // di chuyển đèn dầu
 den.addEventListener("click",function(){
@@ -117,7 +131,9 @@ den.addEventListener("click",function(){
     else{
         moveLight=true
     }
-    moveObj(den,moveLight)
+    if(!lightIsReady){
+        moveObj(den,moveLight)
+    }
 })
 // di chuyển bật lửa
 batlua.addEventListener("click",function(){

@@ -19,6 +19,7 @@ let moveNhietKe = false;
 let moveKieng = false;
 let turnedOn = false;     //check xem đã bật bật lửa chưa
 let moveBatLua = false;
+let isBoiling = false
 let isOnFire = false  //check xem bật bật lửa chưa
 let waterIsBoiled = false //check xem nước sôi chưa
 let t = 20 // biến tạm lưu nhiệt độ
@@ -108,14 +109,18 @@ function moveObj(obj, move, index) {
 
 // di chuyển cốc
 coc.addEventListener("click", function () {
-    moveCoc = moveCtrl(moveCoc)
-    moveObj(coc, moveCoc)
+    if(!isBoiling){
+        moveCoc = moveCtrl(moveCoc)
+        moveObj(coc, moveCoc)
+    }
 })
 
 // di chuyển đèn cồn
 den.addEventListener("click", function () {
-    moveDen = moveCtrl(moveDen)
-    moveObj(den, moveDen)
+    if(!isBoiling){
+        moveDen = moveCtrl(moveDen)
+        moveObj(den, moveDen)
+    }
 })
 
 // di chuyển thuốc tím
@@ -132,8 +137,10 @@ nhietke.addEventListener("click", function () {
 
 // di chuyển kiềng
 kieng.addEventListener("click", function () {
-    moveKieng = moveCtrl(moveKieng)
-    moveObj(kieng, moveKieng)
+    if(!isBoiling){
+        moveKieng = moveCtrl(moveKieng)
+        moveObj(kieng, moveKieng)
+    }
 })
 
 // di chuyển bật lửa
@@ -198,12 +205,14 @@ async function boil() {
                 if (den.getBoundingClientRect().top > kieng.getBoundingClientRect().top && den.getBoundingClientRect().bottom <= kieng.getBoundingClientRect().bottom) {
                     if (isOnFire) {
                         if (filled) {
+                            isBoiling = true
                             waterIsBoiled = true
                             await sleep(2000)
                             document.getElementById("heat").play()
                             bubble.style.animation = "visibleBubbles 8s ease"
                             bubble.addEventListener("animationend", function () {
                                 bubble.style.opacity = "0.6"
+                                isBoiling =false
                             })
                         }
                         else {
@@ -227,21 +236,21 @@ async function TemperControl() {
         if (nhietke.getBoundingClientRect().bottom <= coc.getBoundingClientRect().bottom) {
             nhietkeInCoc = true
             if (waterIsBoiled) {
-                nhietke.querySelector(".thanhchay").style.animation = "increaseTemper 15s ease"
-                nhietke.querySelector(".temperature").style.animation = "moveTemperIndex 15s ease"
+                nhietke.querySelector(".thanhchay").style.animation = "increaseTemper 10s ease"
+                nhietke.querySelector(".temperature").style.animation = "moveTemperIndex 10s ease"
                 // tăng chỉ số nhiệt độ
                 for (let i = 20; i <= 100; i++) {
                     document.addEventListener("click", function () {
                         i = t
                     })
-                    await sleep(160)
+                    await sleep(100)
                     t = i
                     nhietke.querySelector("p").innerHTML = i + "°"
                 }
 
                 nhietke.querySelector(".temperature").addEventListener("animationend", function () {
-                    nhietke.querySelector(".temperature").style.bottom = "220px"
-                    nhietke.querySelector(".thanhchay").style.height = "200px"
+                    nhietke.querySelector(".temperature").style.bottom = "200px"
+                    nhietke.querySelector(".thanhchay").style.height = "180px"
                 })
             }
         }

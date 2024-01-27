@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tải trang web</title>
+    <link rel="stylesheet" href="./download.css">
+    <link rel="stylesheet" href="./topicChildFiles/colors&fonts.css">
+</head>
+
+<body>
+    <a id="btn" href="https://mega.nz/file/gf0iGZIS#fCcDxybT6mcZLo53--DNoDfmSRkX1MfTPvR8k2P9wgc" target="_blank">Tải về</a>
+
+    <h1>Làm sao để tải về?</h1>
+    <ul>
+        <li>Ấn vào nút <b>Tải về</b> ở trên cùng màn hình</li>
+        <li>Trang sẽ tự động chuyển đến giao diện như hình (click vào hình để xem rõ hơn)</li>
+        <img src="./assets/instruction/1.jpg" alt="">
+        <li>Bấm vào nút <b>download</b> (màu xanh lục) </li>
+        <li>Sau khi thanh màu xanh lục chạy xong sẽ ra giao diện như hình</li>
+        <img src="./assets/instruction/2.jpg" alt="">
+        <li>Chọn nơi lưu trữ file rồi bấm <b>Save</b> (góc dưới bên phải)</li>
+        <li>Mở lại nơi lưu trữ rồi click chuột phải vào file vừa tải, chọn <b>extract to + tên file</b></li>
+        <img src="./assets/instruction/3.jpg" alt="">
+        <li>Chờ đợi</li>
+        <img src="./assets/instruction/4.jpg" alt="">
+        <li>File sau khi giải nén</li>
+        <img src="./assets/instruction/5.jpg" alt="">
+        <li>Mở thư mục ra và chọn file <b>index.html</b> để chạy</li>
+        <img src="./assets/instruction/6.jpg" alt="">
+        <li>Ngoài ra có thể tạo <b>Shortcut</b> để truy cập nhanh hơn</li>
+        <li>Ra màn hình chính, click chuột phải chọn <b>New</b> rồi chọn <b>Shortcut</b></li>
+        <img src="./assets/instruction/7.jpg" alt="">
+        <li>Chọn <b>Browse</b></li>
+        <img src="./assets/instruction/8.jpg" alt="">
+        <li>Tìm file <b>index.html</b> trong folder vừa giải nén</li>
+        <img src="./assets/instruction/9.jpg" alt="">
+        <li>Chọn next</li>
+        <img src="./assets/instruction/10.jpg" alt="">
+        <li>Đổi tên <b>index.html</b> thành <b>CAmissimes</b> rồi nhấn <b>Finish</b></li>
+        <img src="./assets/instruction/11.jpg" alt="">
+        <li>Sau khi đã tạo xong, chuột phải vào shortcut vừa tạo rồi chọn <b>Properties</b></li>
+        <img src="./assets/instruction/12.jpg" alt="">
+        <li>Chọn <b>Change shortcut icon</b></li>
+        <img src="./assets/instruction/13.jpg" alt="">
+        <li>Bấm <b>Browse</b> rồi tìm vào thư mục vừa giải nén, tìm file <b>icon.ico</b></li>
+        <img src="./assets/instruction/15.jpg" alt="">
+        <li>Chọn <b>Open</b> rồi <b>OK</b> rồi chọn <b>Apply</b> rồi chọn <b>OK</b> lần nữa</li>
+        <li>Hoàn thành!</li>
+        <img src="./assets/instruction/finish.jpg" alt="">
+        <li>Từ giờ trở đi, có thể truy cập nhanh chóng bằng cách nháy đúp chuột vào shortcut vừa tạo</li>
+    </ul>
+    <br><br><br>
+
+    <script>
+        let imgs = document.querySelectorAll("img")
+
+        for(let img of imgs){
+            img.addEventListener("click",function(){
+                window.open(img.src)
+            })
+        }
+    </script>
+
+</body>
+
+</html>

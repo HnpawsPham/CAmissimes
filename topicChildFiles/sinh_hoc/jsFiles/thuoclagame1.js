@@ -2,16 +2,16 @@
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-const text=document.getElementById("text")
-const text2=document.getElementById("text2")
-const ins=document.getElementById("instruct")
+const text = document.getElementById("text")
+const text2 = document.getElementById("text2")
+const ins = document.getElementById("instruct")
 const tar = document.getElementById("tar")
 const smoke = document.getElementById("smoke")
-const part2=document.getElementById("part2")
+const part2 = document.getElementById("part2")
 const children = document.querySelectorAll(".elm")
 let parent = document.getElementById("parent")
 const oxy = document.querySelectorAll(".oxy")
-let end=false
+let end = false
 const co2 = document.querySelectorAll(".co2")
 const rit = document.getElementById("rit")
 const yellowteeth = document.getElementById("yellowteeth")
@@ -29,10 +29,10 @@ co2[3].style.margin = "490px 10px 0 600px"
 // 
 smoke.addEventListener("click", function () {
     smoke.style.opacity = "0"
-    ins.innerHTML="*Kéo chuột vào miệng*"
+    ins.innerHTML = "*Kéo chuột vào miệng*"
     movesmoke()
 })
-let time=0
+let startEvent = true
 function movesmoke() {
     document.addEventListener('mousemove', function (event) {
         let mX = event.clientX; // Lấy tọa độ X của chuột
@@ -56,9 +56,9 @@ function movesmoke() {
             for (let i = 0; i < children.length; i++) {
                 children[i].style.display = "block"
             }
-            if(time==0){
-                ins.innerHTML="*Kéo các chất độc từ miệng qua khí quản đến phổi trái*"
-                text.innerHTML="Khi đó ta đưa các chất độc này vào cơ thể"
+            if (startEvent) {
+                ins.innerHTML = "*Kéo các chất độc từ miệng qua khí quản đến phổi trái*"
+                text.innerHTML = "Khi đó ta đưa các chất độc này vào cơ thể"
             }
             moveChild()
         }
@@ -78,27 +78,27 @@ function moveChild() {
 
 }
 // nếu hover vào oxi thì tắt opacity và hiện lên các CO2
-let moveto=false
+let moveto = false
 function combine() {
     for (let i = 0; i < oxy.length; i++) {
         oxy[i].addEventListener("mouseover", function () {
             for (let j = 0; j < children.length; j++) {
-                oxy[j].style.transition = "all 0.7s"
+
                 oxy[j].style.opacity = "0"
                 if (children[j].id != "tar" && children[j].id != "nicotine") {
                     children[j].style.opacity = "0"
                 }
                 co2[j].style.opacity = "1"
-                moveto=true
+                moveto = true
                 smokeControl()
             }
         })
     }
-    if (moveto){
-        time=1
-        text.innerHTML="Hút thuốc có thể gây khó thở do CO và C trong thuốc lá kết hợp với O<sub>2</sub> tạo thành CO<sub>2</sub>, từ đó chiếm chỗ O<sub>2</sub> trong phổi" + "<br />" + "<br />" + "2CO+O<sub>2</sub>->2CO<sub>2</sub>" + "<br/>" + "C+O<sub>2</sub>->CO<sub>2</sub>"
-        ins.innerHTML="*Kéo các chất còn lại lên miệng*"
-        moveto=false
+    if (moveto) {
+        startEvent = false
+        text.innerHTML = "Hút thuốc có thể gây khó thở do CO và C trong thuốc lá kết hợp với O<sub>2</sub> tạo thành CO<sub>2</sub>, từ đó chiếm chỗ O<sub>2</sub> trong phổi" + "<br />" + "<br />" + "2CO+O<sub>2</sub>->2CO<sub>2</sub>" + "<br/>" + "C+O<sub>2</sub>->CO<sub>2</sub>"
+        ins.innerHTML = "*Kéo các chất còn lại lên miệng*"
+        moveto = false
     }
 }
 // nếu chuột di chuyển ra khỏi vùng quy định thì elm đứng yên
@@ -129,42 +129,42 @@ function smokeControl() {
         smoke.style.opacity = "1"
         rit.style.opacity = "1"
         tar.style.opacity = "0"
-        text.innerHTML="Khi nhả khói ra, các cặn bã trong khói thuốc bám vào răng. Trong đó, tar là chất nhầy bám vào răng làm răng vàng (tar đã tác dụng khi hút vào)"
-        
-        if(!end){
-            ins.innerHTML="*Xem phản ứng của cơ thể và nicotine ngấm vào*"
+        text.innerHTML = "Khi nhả khói ra, các cặn bã trong khói thuốc bám vào răng. Trong đó, tar là chất nhầy bám vào răng làm răng vàng (tar đã tác dụng khi hút vào)"
+
+        if (!end) {
+            ins.innerHTML = "*Xem phản ứng của cơ thể và nicotine ngấm vào*"
         }
-        
+
         makeYellow()
-        consumeNicotine()
     })
 }
 
 // làm vàng răng
 function makeYellow() {
-    if (time != 0) {
+    if (!startEvent) {
         setTimeout(function () {
             yellowteeth.style.opacity = "1"
             smoke.style.opacity = "0"
         }, 2000)
     }
-    time = 1
+    startEvent = false
 }
+
+
 // hấp thụ nicotine
 const nicotine = document.getElementById("nicotine")
-time = 0
-function consumeNicotine() {
-    setTimeout(function () {
-        yellowteeth.addEventListener("transitionend", async function () {
-            await sleep(200)
-            nicotine.style.animation = "consume 0.5s ease-in-out"
-            document.body.style.animation = "blink 0.5s ease-in-out"
-            await sleep(200)
-            nicotine.style.opacity = "0"
-            text2.innerHTML="Nicotine hấp thụ qua niêm mạc miệng, phế nang phổi hoặc ngấm qua lưỡi khi hít hoặc hút khói thuốc, tạo cảm giác hưng phấn" +"<br />"+"Nó ảnh hưởng rất nhiều đến cơ thể như gây ra tăng nhịp tim, mức hô hấp, huyết áp,...và gây nghiện"
-            ins.innerHTML=""
-            end=true
-        })
 
-    }, 200)
+function consumeNicotine() {
+    yellowteeth.addEventListener("transitionend", async function () {
+        await sleep(200)
+        nicotine.style.animation = "consume 0.5s ease-in-out"
+        document.body.style.animation = "blink 0.5s ease-in-out"
+        await sleep(200)
+        nicotine.style.opacity = "0"
+        text.innerHTML = "<br>Nicotine hấp thụ qua niêm mạc miệng, phế nang phổi hoặc ngấm qua lưỡi khi hít hoặc hút khói thuốc, tạo cảm giác hưng phấn" + "<br />" + "Nó ảnh hưởng rất nhiều đến cơ thể như gây ra tăng nhịp tim, mức hô hấp, huyết áp,...và gây nghiện"
+        ins.innerHTML = ""
+        end = true
+    })
+
 }
+consumeNicotine()

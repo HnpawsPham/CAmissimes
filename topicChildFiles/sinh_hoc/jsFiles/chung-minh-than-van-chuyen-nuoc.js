@@ -19,6 +19,7 @@ let isCut = [false, false]         //check xem đã cắt bông hồng hay chưa
 let cocHasWater = [false, false]       //check cốc đã có nước chưa
 let isRotated = false         //check xem bình nước đã nghiêng chưa
 let take = 0      //check xem đổ nước mấy lần r
+let isPouring = [false,false]
 let isDyed = [false, false]      //check xem hoa đã được nhuộm chưa
 let cocIsDyed = [false, false] // check nước đã nhuộm chưa
 let roseInCoc = [false, false]
@@ -198,6 +199,7 @@ async function getWater(obj, i) {
                 obj.style.right = "300px"
 
                 flow.style.animation = "pouring 2.5s ease"
+                isPouring[i]=true
                 flow.addEventListener("animationend", function () {
                     flow.style.height = "400px"
                 })
@@ -209,6 +211,7 @@ async function getWater(obj, i) {
                 })
 
                 await sleep(2000)
+                isPouring[i]=false
                 flow.style.animation = "stop 2.5s ease"
                 flow.addEventListener("animationend", function () {
                     flow.style.height = "0px"
@@ -256,8 +259,10 @@ for (let i = 0; i < coc.length; i++) {
         coc[i].style.width = "230px"
 
         getWater(coc[i], i)
-        moveCoc[i] = moveCtrl(moveCoc[i])
-        moveObj(coc[i], moveCoc[i])
+        if(!isPouring[i]){
+            moveCoc[i] = moveCtrl(moveCoc[i])
+            moveObj(coc[i], moveCoc[i])
+        }
     })
 }
 
