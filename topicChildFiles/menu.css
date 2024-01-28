@@ -1,3 +1,6 @@
+body{
+    overflow-x: hidden;
+}
 #searchbar{
     display: flex;
     align-items: center;
