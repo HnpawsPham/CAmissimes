@@ -5,6 +5,7 @@ const pheu = document.querySelectorAll(".pheu")
 const binhnuoc = document.getElementById("binhnuoc")
 const help = document.getElementById("help")
 const dayCover = document.getElementById("dayCover")
+const voice = document.getElementById("voice");
 
 let moveCoc = [false, false]       //cho phép cốc di chuyển
 let moveOng = [false, false]       //cho phép ống nghiện di chuyển
@@ -98,16 +99,23 @@ for (let i = 0; i < coc.length; i++) {
     })
 }
 // cho ống nghiện di chuyển
-for (let i = 0; i < ong.length; i++) {
+for (let i=0; i<ong.length; i++) {
     ong[i].addEventListener("click", function () {
         if(!ongIsPouring[i]){
             moveOng[i] = moveCtrl(moveOng[i])
             moveObj(ong[i], moveOng[i], i)
         }
-        // cho ống nghiệm lật ngược
-        upsideDown(ong[i], i)
     })
 }
+// cho ống nghiệm lật ngược
+for (let i=0; i<ong.length; i++) {
+    ong[i].addEventListener("click", function () {
+        if(!ongIsPouring[i]){
+            upsideDown(ong[i], i);
+        }
+    })
+}
+
 // cho rong đuôi chó di chueyern
 for (let i = 0; i < rong.length; i++) {
     rong[i].addEventListener("click", function () {
@@ -129,24 +137,26 @@ function upsideDown(obj, index) {
     obj.addEventListener("dblclick", function () {
         if (obj.className == "ongnghiem") {
             if (!isRotated[index]) {
-                obj.style.transform = "rotate(180deg)"
-                isRotated[index] = true
+                obj.style.transform = "rotate(180deg)";
+                isRotated[index] = true;
 
                 // nếu có chứa nước thì cho nước chảy ngược xuống (vật lí)
                 if (ongnghiemHasWater[index]) {
                     obj.querySelector("div").style.top = 5 + "px"
-                    obj.querySelector("div").style.borderRadius = " 0px"
-                    dayCover.style.opacity = "1"
-                }
-                else {
-                    obj.querySelector("div").style.bottom = 10 + "px"
-                    obj.querySelector("div").style.borderRadius = " 0 0 20px 20px"
+                    obj.querySelector("div").style.borderRadius = "0px"
 
-                    dayCover.style.opacity = "0"
+                    if(index == 0){
+                        dayCover.style.opacity = "1"
+                    }
+                
                 }
             }
             else {
                 obj.style.transform = "rotate(0deg)"
+
+                obj.querySelector("div").style.top = 15 + "px"
+                obj.querySelector("div").style.borderRadius = " 0 0 20px 20px"
+
                 isRotated[index] = false
             }
         }
@@ -309,11 +319,13 @@ function visibleConclusion() {
     document.getElementById("conclu").addEventListener("click", function () {
         if (!isOn) {
             document.getElementById("text").style.visibility = "visible"
-            isOn = true
+            isOn = true;
+            voice.play();
         }
         else {
             document.getElementById("text").style.visibility = "hidden"
-            isOn = false
+            isOn = false;
+            voice.pause();
         }
     })
 }

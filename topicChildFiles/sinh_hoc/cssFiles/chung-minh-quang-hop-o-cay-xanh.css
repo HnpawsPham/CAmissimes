@@ -63,7 +63,7 @@ span{
     display: flex;
 }
 .ongnghiem{
-    z-index: 5;
+    z-index: 6;
     position: fixed;
     margin: 410px 0 0 330px;
 }
@@ -95,6 +95,7 @@ span{
     transition: all 3s;
 }
 .water{
+    z-index: 0;
     border-radius:  0 0 20px 20px;
     position: absolute;
     bottom: 10px;

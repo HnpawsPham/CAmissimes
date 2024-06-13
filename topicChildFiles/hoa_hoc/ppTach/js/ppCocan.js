@@ -19,10 +19,6 @@ let bucketIsReady=false //xô đã đặt vào đế
 let lightIsReady=false  //đèn đã đặt vào đế
 let soundPlayed = false
 
-// tạo giọng nói cho kết luận
-const mouth = window.speechSynthesis
-const voices = mouth.getVoices()
-const speech = new SpeechSynthesisUtterance(document.getElementById("text").innerHTML)
 
 // hiện menu điều khiển
 function showControll(){
@@ -34,9 +30,11 @@ function visibleConclusion(){
     let isOn=false
     document.getElementById("conclu").addEventListener("click",function(){
         if(!isOn){
-            mouth.speak(speech)
+            // mouth.speak(speech)
             document.getElementById("text").style.visibility="visible"
-            isOn=true
+            isOn=true;
+            sound.src = "./assets/voices/Sau khi cô cạn, ta thu được muối dạng rắn còn nước bốc hơi hết.Khi đun dung dịch muối, nước bốc hơi trong quá trình bay hơi, nhưng muối không thể bay hơi đượ.mp3";
+            sound.play();
         }
         else{
             document.getElementById("text").style.visibility="hidden"
@@ -88,6 +86,9 @@ function moveObj(obj,move){
             if(turnBatLua && batluaClicked){
             isHotEnough=true
             den.src="./assets/dendaufire.png"
+
+            sound.src = "./assets/fireon.mp3";
+            sound.play();
             }
         })
         // phản ứng bốc hơi
@@ -100,8 +101,9 @@ function moveObj(obj,move){
 
             await sleep(100)
             if(!soundPlayed){
+                sound.src = "./assets/boil.mp3";
                 sound.play()
-                soundPlayed = true
+                soundPlayed = true;
             }
             steam.addEventListener("animationend",function(){
                 bucketIsReady=false
@@ -147,7 +149,7 @@ batlua.addEventListener("click",function(){
             batlua.src="./assets/batluafire.png"
             batlua.style.width="90px"
             await sleep(300)
-            turnBatLua=true
+            turnBatLua=true;
         }
         else{
             batlua.src="./assets/batlua.png"

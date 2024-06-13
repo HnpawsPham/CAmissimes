@@ -1,3 +1,6 @@
+body{
+    overflow-x: hidden;
+}
 #searchbar{
     display: flex;
     align-items: center;
@@ -23,7 +26,10 @@ h1{
     color: #fffcf6;
 }
 h2{
-    height: 40%;
+    height: 35%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 90%;
     margin:0;
     color: #0e0707;
@@ -42,6 +48,7 @@ h2{
    font-size: 30px;
 }
 .col{
+    position: relative;
     text-align: center;
     width: 450px;
     height: 300px;
@@ -52,12 +59,18 @@ h2{
     justify-content: center;
     align-items: center;
 }
-.col p{
-    height: 20%;
+.col span{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.col p,u{
+    height: 12%;
     font-family: spline;
     padding: 0 10px;
 }
 .col a{
+    cursor: pointer;
     padding: 10px 30px;
     border-radius: 20px;
     color: rgb(255, 255, 255);
@@ -69,7 +82,7 @@ h2{
 }
 .row{
     display: flex;
-    width: 96vw;
+    width: 100vw;
     justify-content: space-evenly;
 }
 .container{
@@ -83,6 +96,7 @@ h2{
     display: none;
 }
 #suggest{
+    z-index: 6;
     filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.583));
     display: flex;
     justify-content: center;

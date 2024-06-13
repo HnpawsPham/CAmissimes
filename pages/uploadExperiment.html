@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload your work!</title>
+    <link rel="stylesheet" href="../css/uploadExperiment.css">
+    <link rel="stylesheet" href="../css/scrollbar.css">
+</head>
+
+<body>
+    <svg id="return" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#161215"><path d="m287-446.67 240 240L480-160 160-480l320-320 47 46.67-240 240h513v66.66H287Z"/></svg>
+
+    <div id="main">
+
+        <div id="experiment-info" class="box">
+            <h1>Experiment Info</h1>
+
+            <!-- FORM -->
+            <div style="display: flex; justify-content: space-between; width: 90%;">
+                <input id="work-name" type="text" placeholder="Name">
+
+                <select name="" id="grade">
+                    <option value="grade">Grade</option>
+                    <option value="0">All</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                </select>
+
+                <select name="" id="topic">
+                    <option value="topic">Topic</option>
+                    <option value="Biology">Biology</option>
+                    <option value="Chemistry">Chemistry</option>
+                    <option value="Physics">Physics</option>
+                </select>
+            </div>
+
+            <!-- DESCRIPTION -->
+            <textarea name="" id="description" placeholder="Describe about your experiment" rows="5"cols="36"></textarea>
+
+            <!-- COVER IMAGE -->
+            <img id="cover-img" src="" alt="">
+            <p id="cover-img-text">Input cover image here
+                <input id="cover-img-input" type="file" accept=".jpg, .jpeg, .png, .gif, .bmp, .tif, .tiff, .svg, .heif, .heic, .webp, .raw, .ico">
+            </p>
+
+        </div>
+
+
+        <div id="upload-source" class="box">
+            <h1>Source</h1>
+
+            <div id="upload-field">
+                <div class="field" id="code">
+                    <p>Upload HTML file (please put all CSS and JS commands into this file, required)</p>
+                    <input id="upload-code" type="file" accept=".html">
+                </div>
+
+                <div class="field" id="asset">
+                    <p>Upload assets (required)</p>
+                    <input id="upload-assets" type="file" multiple accept=".jpg, .jpeg, .png, .gif, .bmp, .tiff, .tif, .webp, .svg, .heic, .heif, .raw, .ico, .mp4, .avi, .mkv, .mov, .wmv, .flv, .webm, .mpg, .mpeg, .3gp, .m4v">
+                </div>
+
+                <div class="field" id="audio">
+                    <p>Upload audios (optional)</p>
+                    <input id="upload-audios" type="file" multiple accept=".mp3, .wav, .ogg, .aac, .flac">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <button id="submit">Submit</button>
+
+    <h1>NOTICE!</h1>
+    <img id="notice" src="../assets/notice.jpg" alt="">
+
+    <h1>YOU MAY NEED</h1>
+
+    <h3>Move object commands</h3>
+    
+
+
+    <script type="module" src="../js/uploadExperiment.js"></script>
+</body>
+
+</html>

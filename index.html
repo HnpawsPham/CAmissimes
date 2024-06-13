@@ -6,14 +6,18 @@
     <title>CAmissimes</title>
     <link rel="stylesheet" href="./topicChildFiles/colors&fonts.css">
     <link rel="shortcut icon" href="./icon.ico">
-    <link rel="stylesheet" href="./home.css">
+    <link rel="stylesheet" href="./css/home.css">
+    <link rel="stylesheet" href="./css/scrollbar.css">
 </head>
 <body>
     <!-- Computer-Assisted Simulation of Interactive Multistep Experimentation -->
     <!-- Mô phỏng thí nghiệm tương tác nhiều bước có sự hỗ trợ của máy tính -->
+    
         <h1>CAmissimes</h1>
-        <button style="margin: 20px 0 0 75vw;"><a href="./topic.html">Topics</a></button>
-        <button style="margin: 20px 0 0 85vw;"><a href="./download.html">Download</a></button>
+        <button id="manage" class="hidden" style="margin: 20px 0 0 59.7vw;"><a href="./pages/admin.html">Manage</a></button>
+        <button style="margin: 20px 0 0 70vw;"><a href="./pages/topic.html">Topics</a></button>
+        <button style="margin: 20px 0 0 79vw;"><a href="./pages/download.html">Download</a></button>
+        <button id="user" style="margin: 20px 0 0 90.7vw;"><a href="./pages/login.html">Login</a></button>
 
         <div id="visual">
             <!-- <a target="_blank" href="https://www.flaticon.com/free-icons/power-meter" title="power meter icons">Icons created by Freepik - Flaticon</a> -->
@@ -25,8 +29,7 @@
         </div>
         <div id="comment">
             <br>
-            <!-- doi method thanh delete thi nó sẽ vào cái app.delete .... -->
-            <!-- <form  id="form" action="/addComment" method="post"> -->
+
             <form id="form">
                 <input id="content" type="text" name="content" placeholder="Bình luận ở đây">
                 <input type="submit" name="" id="submit">
@@ -36,9 +39,9 @@
 
             </div>
         </div>
-        <!-- <p id="getComment">Show comments</p> -->
 
-    <!-- <script src="./others.js"></script> -->
-    <script src="./comment.js"></script>
+    <script type="module" src="./js/firebase.js"></script>
+    <script type="module" src="./js/checkAccount.js"></script>
+    <script type="module" src="./js/comment.js"></script>
 </body>
 </html>

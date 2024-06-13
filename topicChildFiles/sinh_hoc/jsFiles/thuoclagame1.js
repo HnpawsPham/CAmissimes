@@ -2,9 +2,11 @@
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
 const text = document.getElementById("text")
 const text2 = document.getElementById("text2")
 const ins = document.getElementById("instruct")
+const insAudio = document.getElementById("instruct-audio")
 const tar = document.getElementById("tar")
 const smoke = document.getElementById("smoke")
 const part2 = document.getElementById("part2")
@@ -16,6 +18,42 @@ const co2 = document.querySelectorAll(".co2")
 const rit = document.getElementById("rit")
 const yellowteeth = document.getElementById("yellowteeth")
 let abletoMove = false
+
+// mảng lưu giọng đọc
+let voices = [
+    {
+        audio: "./assets/voices/click vào khói thuốc để bắt đầu.mp3",
+        canStart: true
+    },
+    {
+        audio:"./assets/voices/Kéo các chất độc từ miệng qua khí quản đến phổi trái.mp3",
+        canStart: true
+    },
+    {
+        audio: "./assets/voices/Kéo chuột vào miệng.mp3",
+        canStart: true
+    },
+    {
+        audio: "./assets/voices/Kéo các chất còn lại lên miệng.mp3",
+        canStart: true
+    },
+    {
+        audio: "./assets/voices/Xem phản ứng của cơ thể và nicotine ngấm vào.mp3",
+        canStart: true
+    }
+]
+
+// cho giọng đọc thông báo
+function runVoices(index){
+    if(voices[index].canStart){
+        voices[index].canStart = false;
+        insAudio.src = voices[index].audio;
+        insAudio.play();
+    }
+}
+
+runVoices(0);
+
 // căn chỉnh
 oxy[0].style.margin = "450px 0px 0 670px"
 oxy[1].style.margin = "420px 0 0 600px"
@@ -30,8 +68,12 @@ co2[3].style.margin = "490px 10px 0 600px"
 smoke.addEventListener("click", function () {
     smoke.style.opacity = "0"
     ins.innerHTML = "*Kéo chuột vào miệng*"
+    runVoices(2);
     movesmoke()
 })
+
+
+
 let startEvent = true
 function movesmoke() {
     document.addEventListener('mousemove', function (event) {
@@ -49,9 +91,11 @@ function movesmoke() {
             })
         }
         // nếu có thì cho chạy
+
         if (abletoMove == true) {
             parent.style.left = mX + 2 + "px";
             parent.style.top = mY - 2 + "px";
+
             // hiện các elm
             for (let i = 0; i < children.length; i++) {
                 children[i].style.display = "block"
@@ -59,12 +103,14 @@ function movesmoke() {
             if (startEvent) {
                 ins.innerHTML = "*Kéo các chất độc từ miệng qua khí quản đến phổi trái*"
                 text.innerHTML = "Khi đó ta đưa các chất độc này vào cơ thể"
+                runVoices(1);
             }
             moveChild()
         }
-
     })
 }
+
+
 // di chuyển thành phần thuốc lá  
 function moveChild() {
     for (let i = 1; i < children.length; i++) {
@@ -97,7 +143,8 @@ function combine() {
     if (moveto) {
         startEvent = false
         text.innerHTML = "Hút thuốc có thể gây khó thở do CO và C trong thuốc lá kết hợp với O<sub>2</sub> tạo thành CO<sub>2</sub>, từ đó chiếm chỗ O<sub>2</sub> trong phổi" + "<br />" + "<br />" + "2CO+O<sub>2</sub>->2CO<sub>2</sub>" + "<br/>" + "C+O<sub>2</sub>->CO<sub>2</sub>"
-        ins.innerHTML = "*Kéo các chất còn lại lên miệng*"
+        ins.innerHTML = "*Kéo các chất còn lại lên miệng*";
+        runVoices(3);
         moveto = false
     }
 }
@@ -133,6 +180,7 @@ function smokeControl() {
 
         if (!end) {
             ins.innerHTML = "*Xem phản ứng của cơ thể và nicotine ngấm vào*"
+            runVoices(4);
         }
 
         makeYellow()

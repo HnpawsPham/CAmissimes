@@ -1,0 +1,13 @@
+#table{
+    margin: auto;
+    width: 80vw;
+}
+
+#table th,td{
+    text-align: center;
+    border: 2px solid black;
+}
+
+#admin-name{
+    padding-left: 40px;
+}

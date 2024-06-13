@@ -1,7 +1,18 @@
+
+import { findData } from "../../js/firebase.js"
+
+// COMBINE DEFAULT EXPERIMENTS AND USER UPLOADED EXPERIMENTS TOGETHER
+let defaultListLength = list.length;
+let allUserWork = await findData("allUserWork");
+list.push(...allUserWork);
+
+let accountList = await findData("accountList");
+
 const search = document.getElementById("search")
 const body = document.querySelector(".container")
 const notFoundText = document.querySelector(".notfound")
-const suggest = document.getElementById("suggest")
+const suggest = document.getElementById("suggest");
+const topic = document.getElementsByTagName("b")[0].id;
 
 
 let grade6 = suggest.querySelectorAll("li")[0]
@@ -32,25 +43,73 @@ allGrade.addEventListener("click", function () {
     }
 })
 
-for (let info of list) {
-    let card = document.createElement("div")
-    card.classList.add("col")
 
-    let title = document.createElement("h2")
-    title.innerHTML = info.title
-    card.appendChild(title)
+for (let [i, info] of list.entries()) {
 
-    let desc = document.createElement("p")
-    desc.innerHTML = info.desb
-    card.appendChild(desc)
+    if (info.author.name != "HnpawsPham" && info.topic != topic) {
+        continue;
+    }
+    else {
+        let card = document.createElement("div")
+        card.classList.add("col")
 
-    let button = document.createElement("a")
-    button.innerHTML = "Xem ngay"
-    button.href = info.link
-    button.target = "_blank"
+        let title = document.createElement("h2")
+        title.innerHTML = info.title
+        card.appendChild(title)
 
-    card.appendChild(button)
-    body.appendChild(card)
+        let desc = document.createElement("p")
+        desc.innerHTML = info.desb;
+        card.appendChild(desc)
+
+        if (info.isVerified) {
+            let check = document.createElement("span");
+            check.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#255290"><path d="m344-60-76-128-144-32 14-148-98-112 98-112-14-148 144-32 76-128 136 58 136-58 76 128 144 32-14 148 98 112-98 112 14 148-144 32-76 128-136-58-136 58Zm34-102 102-44 104 44 56-96 110-26-10-112 74-84-74-86 10-112-110-24-58-96-102 44-104-44-56 96-110 24 10 112-74 86 74 84-10 114 110 24 58 96Zm102-318Zm-42 142 226-226-56-58-170 170-86-84-56 56 142 142Z"/></svg>`;
+            card.appendChild(check);
+        }
+
+        let author = document.createElement("u");
+        author.innerHTML = "By " + info.author.name;
+        card.appendChild(author);
+
+        let button = document.createElement("a")
+        button.innerHTML = "Xem ngay"
+
+        button.addEventListener("click", function () {
+            if(info.author.id != -1){
+                sessionStorage.setItem("viewingWorkID", (i - defaultListLength));
+
+                // OPEN NEW TAB
+                const newTab = window.open('', '_blank');
+    
+                newTab.document.open();
+                newTab.document.write(`${info.link}`);
+    
+                // LOAD IMAGES AND AUDIOS
+                let images = newTab.document.querySelectorAll("img");
+                let audios = newTab.document.querySelectorAll("audio");
+    
+                if (images.length > 0) {
+                    for (let image of images) {
+                        image.src = accountList[info.author.id].work[info.work_index_in_userList].assets[`${image.src.split("/").pop()}`];
+                    }
+                }
+    
+                if (audios.length > 0) {
+                    for (let audio of audios) {
+                        audio.src = accountList[info.author.id].work[info.work_index_in_userList].audios[`${audio.src.split("/").pop()}`];
+                    }
+                }
+    
+                newTab.document.close(); 
+            }
+            else{
+                window.open(info.link);
+            }
+        })
+
+        card.appendChild(button)
+        body.appendChild(card)
+    }
 }
 // bỏ dấu tiếng việt
 function normalizeStr(str) {

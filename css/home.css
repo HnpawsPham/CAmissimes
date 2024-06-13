@@ -5,9 +5,12 @@ body{
 #visual{
     width: 100vw;
     height: 100vh;
-    background-image: url("./assets/6a515b7d-7858-4051-8fcd-ec87a9e9183a.png");
+    background-image: url("../assets/6a515b7d-7858-4051-8fcd-ec87a9e9183a.png");
     background-size: contain;
     background-position: top center;
+}
+.hidden{
+    display: none;
 }
 #getComment{
     color: white;
@@ -27,6 +30,7 @@ h1{
     margin: 20px 0 0 20px;
 }
 button{
+    cursor: pointer;
     position: fixed;
     background-color: rgba(247, 247, 247, 0.889);
     border: none;
@@ -79,6 +83,9 @@ h2{
     background-color: rgb(22, 18, 21);
     width: 50%;
     height: 100%;
+}
+#commentList::-webkit-scrollbar {
+    display: none;
 }
 #submit{
     border: none;
