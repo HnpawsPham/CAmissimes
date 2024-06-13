@@ -21,6 +21,19 @@ const blood = document.getElementsByClassName("blood")
 const bigLoop = document.getElementById("vong-tuan-hoan-lon")
 const smallLoop = document.getElementById("vong-tuan-hoan-nho")
 
+// hiện phần thông tin
+let isOn = false
+    document.getElementById("conclu").addEventListener("click", function () {
+        if (!isOn) {
+            document.getElementById("text").style.visibility = "visible"
+            isOn = true
+        }
+        else {
+            document.getElementById("text").style.visibility = "hidden"
+            isOn = false
+        }
+})
+
 // hàm đợi
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));

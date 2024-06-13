@@ -48,6 +48,15 @@ h1{
     width: 88px;
     margin: 245px 0 0 703px;
 }
+#conclu{
+    opacity: 1;
+    margin: 10px 0 0 90vw;
+}
+#text{
+    filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.496));
+    margin: 20px 0 0 30vw;
+    overflow-y: hidden;
+}
 .hidden{
     visibility: hidden;
 }
