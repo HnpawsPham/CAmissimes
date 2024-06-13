@@ -92,3 +92,8 @@ h1{
     border-radius: 10px;
     padding: 10px 20px;
 }
+#logout{
+    cursor: pointer;
+    position: fixed;
+    margin: -14.6vh 3.5vw;
+}

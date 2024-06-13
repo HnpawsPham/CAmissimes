@@ -8,14 +8,20 @@ body{
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 h1{
+    color: var(--white);
     font-size: 50px;
     text-align: center;
     text-decoration: underline;
+}
+h3{
+    color: var(--gray);
+    padding: 10px 10vw;
 }
 :root{
     --coffee: #B19470;
     --white: #F8FAE5;
     --brown: #76453B;
+    --gray: #584036;
 }
 #main{
     display: flex;
@@ -121,4 +127,21 @@ h1{
     width: 80vw;
     object-fit: cover;
     border: 3px solid var(--white);
+}
+.example-code{
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.763);
+    width: 80vw;
+    margin: 0 auto 10vh auto;
+}
+.example-code pre{
+    padding-top: 15px;
+    color: var(--white);
+}
+.copy-icon{
+    z-index: 7;
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 15px;
 }

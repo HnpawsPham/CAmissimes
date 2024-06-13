@@ -10,6 +10,7 @@ const descriptionInput = document.getElementById("description");
 const coverImgReview = document.getElementById("cover-img");
 const coverImgInput = document.getElementById("cover-img-input");
 const returnBtn = document.getElementById("return");
+const copyBtns = document.querySelectorAll(".copy-icon");
 
 let accountID = sessionStorage.getItem("accountID");
 let isLoggedIn = sessionStorage.getItem("isLoggedIn");
@@ -205,3 +206,12 @@ coverImgInput.addEventListener("change", function (e) {
     const file = e.target.files[0];
     getBase64(file, "cover-img");
 })
+
+// COPY EXAMPLE CODES
+for(let copyBtn of copyBtns){
+    copyBtn.addEventListener("click", function(){
+        navigator.clipboard.writeText(copyBtn.parentElement.querySelector("pre").innerHTML);
+
+        alert("Copied!");
+    })
+}

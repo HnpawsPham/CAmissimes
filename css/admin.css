@@ -1,13 +1,13 @@
-#table{
-    margin: auto;
+#table, #comments{
+    margin: 10vh auto;
     width: 80vw;
 }
 
-#table th,td{
+table th,td{
     text-align: center;
     border: 2px solid black;
 }
 
-#admin-name{
+h1{
     padding-left: 40px;
 }

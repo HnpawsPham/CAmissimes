@@ -19,7 +19,7 @@ body{
 #visual a{
     position: fixed;
     margin: 96vh 0 0 10px;
-    font-size: 1px;
+    font-size: 10px;
     color: rgba(255, 255, 255, 0.888);
 }
 h1{
@@ -96,13 +96,20 @@ h2{
     font-family: loveya;
 }
 .mess{
-    margin: 0 20px;
+    position: relative;
+    margin: 10px 20px;
     font-family: 'spline';
-    min-height: 20px;
+    min-height: 40px;
     background-color: rgb(238, 238, 238);
-    border-radius: 10px 10px 10px 0;
+    border-radius: 10px;
     padding: 10px 20px;
     cursor: pointer;
+}
+.mess i{
+    font-size: 15px;
+    position: absolute;
+    bottom: 5px;
+    right: 15px;
 }
 .mess:hover{
     font-weight: bold;

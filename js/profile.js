@@ -25,16 +25,17 @@ const editUsername = document.getElementById("edit-username");
 const uploadExperiment = document.getElementById("upload-experiment");
 const userWorkContainer = document.getElementById("user-work");
 const home = document.getElementById("home");
+const logout = document.getElementById("logout");
 const sort = document.getElementById("sort");
 
 loadData();
 
 // VISIBLE USERNAME
-try {
-    username.innerHTML = currentAccount.name;
-}
-catch {
+if(currentAccount.name == undefined){
     username.innerHTML = (Math.random() + 1).toString(36).substring(2);
+}
+else{
+    username.innerHTML = currentAccount.name;
 }
 
 // CHANGE USERNAME
@@ -122,5 +123,13 @@ function loadData() {
 
 // RETURN HOME
 home.addEventListener("click", function () {
+    window.location.href = "../index.html";
+})
+
+// LOGOUT ACCOUNT
+logout.addEventListener("click", function(){
+    sessionStorage.setItem("isLoggedIn", false);
+    sessionStorage.removeItem("accountID");
+
     window.location.href = "../index.html";
 })

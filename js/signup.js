@@ -27,7 +27,8 @@ form.addEventListener("submit",function(e){
                 email: emailInput.value,
                 pass: passInput.value,
                 role: 0,
-                index: accountList.length
+                index: accountList.length,
+                canComment: true
             })
 
             saveToStorage("accountList", accountList);

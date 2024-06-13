@@ -143,16 +143,31 @@ function searchItem() {
             }
             catch { }
 
-            if (normalizeStr(titles[i].innerHTML).includes(normalizeStr(search.value))) {
-                card[i].classList.remove("hide")
-                notFoundText.classList.add("hide")
+            // FOR BETTER SEARCHING EXPERIENCE
+            try{
+                if (normalizeStr(titles[i].innerHTML).includes(normalizeStr(search.value))) {
+                    card[i].classList.remove("hide")
+                    notFoundText.classList.add("hide")
+                }
             }
+            catch{}
         }
     }
+    else{
+        for (let i in titles) {
+            notFoundText.classList.add("hide");
+            try {
+                card[i].classList.remove("hide");
+            }
+            catch { }
+        }
+    }
+
     if (body.querySelectorAll(".hide").length == body.querySelectorAll(".col").length) {
-        notFoundText.classList.remove("hide")
+        notFoundText.classList.remove("hide");
     }
 }
+    
 
 // HIỆN CÁC THÍ NGHIỆM THEO LỚP
 function visibleToList(grade) {
