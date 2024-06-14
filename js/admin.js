@@ -3,6 +3,7 @@ import { findData, saveToStorage } from "./firebase.js";
 
 let accountList = await findData("accountList");
 let commentList = await findData("commentList");
+let allUserWork = await findData("allUserWork");
 
 let accountID = sessionStorage.getItem("accountID");
 
@@ -99,13 +100,17 @@ for (let [i, account] of accountList.entries()) {
     
             checkbox.addEventListener("change",function(){
                 if(checkbox.checked){
-                    work["isVerified"] = true;
+                    account.work[i]["isVerified"] = true;
+                    console.log(allUserWork[account.work[i].indexInAll].isVerified)
+                    allUserWork[account.work[i].indexInAll].isVerified = true;
                 }
                 else{
-                    work["isVerified"] = false;
+                    account.work[i]["isVerified"] = false;
+                    allUserWork[account.work[i].indexInAll].isVerified = false;
                 }
     
                 saveToStorage("accountList", accountList);
+                saveToStorage("allUserWork", allUserWork);
         })
     
             workList.appendChild(card);

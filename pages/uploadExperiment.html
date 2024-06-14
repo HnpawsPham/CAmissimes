@@ -10,6 +10,9 @@
 </head>
 
 <body>
+    <!-- other languages -->
+    <div id="google_translate_element"></div>
+
     <svg id="return" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px"
         fill="#161215">
         <path d="m287-446.67 240 240L480-160 160-480l320-320 47 46.67-240 240h513v66.66H287Z" />
@@ -200,6 +203,14 @@
             }
         </pre>
     </div>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({ pageLanguage: 'vie', layout: google.translate.TranslateElement.InlineLayout.SIMPLE }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript"
+        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script type="module" src="../js/uploadExperiment.js"></script>
 </body>
