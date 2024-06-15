@@ -86,7 +86,7 @@ let list = [
             name: "HnpawsPham",
         },
         link: "../hoa_hoc/tinh_chat_hoa_hoc/base.html",
-        isVerified: false
+        isVerified: true
     },
     {
         title: "Tính chất hóa học của muối",
