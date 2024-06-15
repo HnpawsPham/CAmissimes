@@ -11,6 +11,10 @@ const adminName = document.getElementById("admin-name");
 const table = document.getElementById("table");
 const commentTable = document.getElementById("comments");
 
+// DELAY
+function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+        
+
 // OPEN CHOSEN WORK
 function viewUserWork(account, workID) {
     // OPEN NEW TAB
@@ -154,65 +158,71 @@ for (let [i, account] of accountList.entries()) {
 }
 
 // COMMENTS LIST
-for(let [i, comment] of commentList.entries()){
-    let tr = document.createElement("tr");
-
-    let index = document.createElement("td");
-    index.innerHTML = i;
-    tr.appendChild(index);
-
-    let email = document.createElement("td");
-    email.innerHTML = comment.critic;
-    tr.appendChild(email);
-
-    let content = document.createElement("td");
-    content.innerHTML = comment.text;
-    tr.appendChild(content);
-
-    let date = document.createElement("td");
-    date.innerHTML = comment.date;
-    tr.appendChild(date);
-
-    let td = document.createElement("td");
-
-    let deleteBtn = document.createElement("button");
-    deleteBtn.innerHTML = "Delete";
-    td.appendChild(deleteBtn);
-    tr.appendChild(td);
-
-    deleteBtn.onclick = function(){
-        commentList.splice(i,1);
-        saveToStorage("commentList", commentList);
-
-        location.reload();
-    }
-
-    let td2 = document.createElement("td");
-
-    let blockUser = document.createElement("button");
-
-    if(accountList[comment.critic_index].canComment){
-        blockUser.innerHTML = "Block this user";
-    }
-    else{
-        blockUser.innerHTML = "Unblock this user";
-    }
-
-    td2.appendChild(blockUser);
-    tr.appendChild(td2);
-
-    blockUser.onclick = function(){
-        if(blockUser.innerHTML == "Block this user"){
-            blockUser.innerHTML = "Unblock this user";
-            accountList[comment.critic_index].canComment = false;
+function loadComments(){
+    for(let [i, comment] of commentList.entries()){
+        let tr = document.createElement("tr");
+    
+        let index = document.createElement("td");
+        index.innerHTML = i;
+        tr.appendChild(index);
+    
+        let email = document.createElement("td");
+        email.innerHTML = comment.critic;
+        tr.appendChild(email);
+    
+        let content = document.createElement("td");
+        content.innerHTML = comment.text;
+        tr.appendChild(content);
+    
+        let date = document.createElement("td");
+        date.innerHTML = comment.date;
+        tr.appendChild(date);
+    
+        let td = document.createElement("td");
+    
+        let deleteBtn = document.createElement("button");
+        deleteBtn.innerHTML = "Delete";
+        td.appendChild(deleteBtn);
+        tr.appendChild(td);
+    
+        deleteBtn.onclick = function(){
+            commentList.splice(i,1);
+            saveToStorage("commentList", commentList);
+    
+            location.reload();
+        }
+    
+        let td2 = document.createElement("td");
+    
+        let blockUser = document.createElement("button");
+    
+        if(accountList[comment.critic_index].canComment){
+            blockUser.innerHTML = "Block this user";
         }
         else{
-            blockUser.innerHTML = "Block this user";
-            accountList[comment.critic_index].canComment = true;
+            blockUser.innerHTML = "Unblock this user";
         }
+    
+        td2.appendChild(blockUser);
+        tr.appendChild(td2);
+    
+        blockUser.onclick = function(){
+            if(blockUser.innerHTML == "Block this user"){
+                blockUser.innerHTML = "Unblock this user";
+                accountList[comment.critic_index].canComment = false;
+            }
+            else{
+                blockUser.innerHTML = "Block this user";
+                accountList[comment.critic_index].canComment = true;
+            }
+    
+            saveToStorage("accountList", accountList);
 
-        saveToStorage("accountList", accountList);
+            commentTable.replaceChildren();
+            loadComments();
+        }
+    
+        commentTable.appendChild(tr);
     }
-
-    commentTable.appendChild(tr);
 }
+loadComments();

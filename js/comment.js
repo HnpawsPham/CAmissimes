@@ -10,8 +10,8 @@ let accountID = sessionStorage.getItem("accountID");
 let commentList = await findData("commentList");
 let accountList = await findData("accountList");
 
-form.addEventListener("submit",function(){
-    if(isLoggedIn){
+form.addEventListener("submit",function(e){
+    if(isLoggedIn == true && isLoggedIn != null){
         if(accountList[accountID].canComment){
             if(content.value.trim() != 0){
                 let date = new Date();
@@ -32,8 +32,10 @@ form.addEventListener("submit",function(){
         }
     }
     else{
-        window.location.href = "../pages/login.html";
+        e.preventDefault();
+
         alert("You must log in to comment");
+        window.location.href = "../pages/login.html";
     }
 })
 
@@ -44,7 +46,14 @@ for (let comment of commentList) {
     mess.classList.add("mess");
 
     let date = document.createElement("i");
-    date.innerHTML = comment.date;
+    
+    if(accountList[comment.critic_index].name){
+        date.innerHTML = accountList[comment.critic_index].name + " • " + comment.date;
+    }
+    else{
+        date.innerHTML = "Anonymous • " + comment.date;
+    }
+
     mess.appendChild(date);
 
     container.appendChild(mess);
