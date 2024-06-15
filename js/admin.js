@@ -9,7 +9,10 @@ let accountID = sessionStorage.getItem("accountID");
 
 const adminName = document.getElementById("admin-name");
 const table = document.getElementById("table");
-const commentTable = document.getElementById("comments");        
+const commentTable = document.getElementById("comments");
+
+// WAIT FOR DATABASE TO UPDATE
+let delay = ms => new Promise(res => setTimeout(res, ms));
 
 // OPEN CHOSEN WORK
 function viewUserWork(account, workID) {
@@ -51,13 +54,13 @@ for (let [i, account] of accountList.entries()) {
 
     let name = document.createElement("td");
 
-    if(account.name != undefined){
+    if (account.name != undefined) {
         name.innerHTML = account.name;
     }
-    else{
+    else {
         name.innerHTML = "This account doesn't set a name yet";
     }
-    
+
     tr.appendChild(name);
 
     let email = document.createElement("td");
@@ -70,49 +73,74 @@ for (let [i, account] of accountList.entries()) {
 
     let workList = document.createElement("td");
 
-    if(account.work == undefined){
+    if (account.work == undefined) {
         let none = document.createElement("td");
         none.innerHTML = "None";
-        
+
         tr.appendChild(none);
     }
-    else{
-        for(let i in account.work){
+    else {
+        for (let i in account.work) {
 
             let card = document.createElement("div");
             card.style.display = "flex";
             card.style.justifyContent = "space-evenly";
-    
+
             let name = document.createElement("p");
-            name.style.textDecoration = "underlined";
-            name.innerHTML = account.work[i].name;
+            name.style.textDecoration = "underline";
+            name.style.width = "30%";
+
+            if(account.work[i].name.length < 10){
+                name.innerHTML = account.work[i].name;
+            }
+            else{
+                name.innerHTML = account.work[i].name.substring(0,7) + "...";
+            }
+            
             name.style.cursor = "pointer";
             card.appendChild(name);
-    
-            name.addEventListener("click", function(){
+
+            name.addEventListener("click", function () {
                 viewUserWork(account, i);
             })
-    
+
             let checkbox = document.createElement("input");
             checkbox.type = "checkbox";
             checkbox.checked = account.work[i].isVerified;
             card.appendChild(checkbox);
-    
-            checkbox.addEventListener("change",function(){
-                if(checkbox.checked){
+
+            checkbox.addEventListener("change", function () {
+                if (checkbox.checked) {
                     account.work[i]["isVerified"] = true;
                     console.log(allUserWork[account.work[i].indexInAll].isVerified)
                     allUserWork[account.work[i].indexInAll].isVerified = true;
                 }
-                else{
+                else {
                     account.work[i]["isVerified"] = false;
                     allUserWork[account.work[i].indexInAll].isVerified = false;
                 }
-    
+
                 saveToStorage("accountList", accountList);
                 saveToStorage("allUserWork", allUserWork);
-        })
-    
+            })
+
+            let deleteBtn = document.createElement("button");
+            deleteBtn.style.width = "50%";
+            deleteBtn.style.height = "20%";
+            deleteBtn.innerHTML = "Delete experiment";
+            card.appendChild(deleteBtn);
+
+            deleteBtn.onclick = function () {
+                allUserWork.splice(account.work[i].indexInAll,1);
+                account.work.splice(i, 1);
+
+                saveToStorage("allUserWork", allUserWork);
+                saveToStorage("accountList", accountList);
+
+                delay(3000);
+                location.reload();
+            }
+
             workList.appendChild(card);
         }
         tr.appendChild(workList);
@@ -134,8 +162,6 @@ for (let [i, account] of accountList.entries()) {
             accountList = await findData("accountList")
         );
 
-        // WAIT FOR DATABASE TO UPDATE
-        let delay = ms => new Promise(res => setTimeout(res, ms));
         await delay(3000);
 
         if (accountList[accountID].role == 0) {
@@ -154,70 +180,70 @@ for (let [i, account] of accountList.entries()) {
 }
 
 // COMMENTS LIST
-function loadComments(){
-    for(let [i, comment] of commentList.entries()){
+function loadComments() {
+    for (let [i, comment] of commentList.entries()) {
         let tr = document.createElement("tr");
-    
+
         let index = document.createElement("td");
         index.innerHTML = i;
         tr.appendChild(index);
-    
+
         let email = document.createElement("td");
         email.innerHTML = comment.critic;
         tr.appendChild(email);
-    
+
         let content = document.createElement("td");
         content.innerHTML = comment.text;
         tr.appendChild(content);
-    
+
         let date = document.createElement("td");
         date.innerHTML = comment.date;
         tr.appendChild(date);
-    
+
         let td = document.createElement("td");
-    
+
         let deleteBtn = document.createElement("button");
         deleteBtn.innerHTML = "Delete";
         td.appendChild(deleteBtn);
         tr.appendChild(td);
-    
-        deleteBtn.onclick = function(){
-            commentList.splice(i,1);
+
+        deleteBtn.onclick = function () {
+            commentList.splice(i, 1);
             saveToStorage("commentList", commentList);
-    
+
             location.reload();
         }
-    
+
         let td2 = document.createElement("td");
-    
+
         let blockUser = document.createElement("button");
-    
-        if(accountList[comment.critic_index].canComment){
+
+        if (accountList[comment.critic_index].canComment) {
             blockUser.innerHTML = "Block this user";
         }
-        else{
+        else {
             blockUser.innerHTML = "Unblock this user";
         }
-    
+
         td2.appendChild(blockUser);
         tr.appendChild(td2);
-    
-        blockUser.onclick = function(){
-            if(blockUser.innerHTML == "Block this user"){
+
+        blockUser.onclick = function () {
+            if (blockUser.innerHTML == "Block this user") {
                 blockUser.innerHTML = "Unblock this user";
                 accountList[comment.critic_index].canComment = false;
             }
-            else{
+            else {
                 blockUser.innerHTML = "Block this user";
                 accountList[comment.critic_index].canComment = true;
             }
-    
+
             saveToStorage("accountList", accountList);
 
             commentTable.replaceChildren();
             loadComments();
         }
-    
+
         commentTable.appendChild(tr);
     }
 }

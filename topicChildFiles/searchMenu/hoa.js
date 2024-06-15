@@ -20,7 +20,7 @@ let list = [
             name: "HnpawsPham",
         },
         link: "./tinh_chat_hoa_hoc/menu.html",
-        isVerified: true
+        isVerified: false
     },
     {
         title: "Natri & Nước",
