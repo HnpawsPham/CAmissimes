@@ -34,7 +34,7 @@ function viewUserWork(account, workID) {
 
     if (audios.length > 0) {
         for (let audio of audios) {
-            audio.src = account.work[workID].assets[`${audio.src.split("/").pop()}`];
+            audio.src = account.work[workID].audios[`${audio.src.split("/").pop()}`];
         }
     }
 
@@ -89,7 +89,7 @@ function loadAccounts() {
 
                 let name = document.createElement("p");
                 name.style.textDecoration = "underline";
-                name.style.width = "30%";
+                name.style.width = "35%";
 
                 if (account.work[i].name.length < 10) {
                     name.innerHTML = account.work[i].name;
