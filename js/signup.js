@@ -1,5 +1,5 @@
 
-import { saveToStorage,findData } from "./firebase.js";
+import { saveToStorage, findData } from "./firebase.js";
 
 let accountList = await findData("accountList");
 
@@ -9,37 +9,52 @@ const passInput = document.getElementById("pass-input");
 const passConfirm = document.getElementById("pass-confirm");
 const notice = document.getElementById("notice");
 
+// DELAY
+function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+
 // notice appear
-function visibleNotice(text){
+function visibleNotice(text) {
     notice.style.display = "flex";
     notice.innerHTML = text;
 
-    setTimeout(function(){
+    setTimeout(function () {
         notice.style.display = "none";
-    },3000)
+    }, 3000)
 }
 
-form.addEventListener("submit",function(e){
+form.addEventListener("submit", function (e) {
     e.preventDefault();
-    if(passInput.value.trim().length > 5){
-        if(passInput.value == passConfirm.value){
-            accountList.push({
-                email: emailInput.value,
-                pass: passInput.value,
-                role: 0,
-                index: accountList.length,
-                canComment: true
-            })
+    if (passInput.value.trim().length > 5) {
 
-            saveToStorage("accountList", accountList);
-
-            visibleNotice("Create new account succesfully");
+        // CHECK IF EMAIL EXISTS OR NOT
+        let checkEmail = accountList.filter(acc => acc.email == emailInput.value);
+        if (checkEmail.length > 0) {
+            visibleNotice("This email already exists");
         }
-        else{
-            visibleNotice("Please check your confirm password again");
+        else {
+            // CHECK PASSWORD
+            if (passInput.value == passConfirm.value) {
+                accountList.push({
+                    email: emailInput.value,
+                    pass: passInput.value,
+                    role: 0,
+                    index: accountList.length,
+                    canComment: true
+                })
+
+                saveToStorage("accountList", accountList);
+
+                visibleNotice("Create new account succesfully");
+
+                sleep(5000);
+                window.location.href = "../pages/login.html";
+            }
+            else {
+                visibleNotice("Please check your confirm password again");
+            }
         }
     }
-    else{
+    else {
         visibleNotice("Password must be at least 6 characters");
     }
 })

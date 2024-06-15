@@ -7,6 +7,9 @@ const emailInput = document.getElementById("email-input");
 const passInput = document.getElementById("pass-input");
 const notice = document.getElementById("notice");
 
+// DELAY
+function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+
 // notice appear
 function visibleNotice(text){
     notice.style.display = "flex";
@@ -27,6 +30,9 @@ form.addEventListener("submit",function(e){
 
         sessionStorage.setItem("isLoggedIn",true);
         sessionStorage.setItem("accountID", check[0].index);
+
+        sleep(2000);
+        window.location.href = "../index.html";
     }
     else{
         visibleNotice("Please check your information again");

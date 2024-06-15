@@ -9,11 +9,7 @@ let accountID = sessionStorage.getItem("accountID");
 
 const adminName = document.getElementById("admin-name");
 const table = document.getElementById("table");
-const commentTable = document.getElementById("comments");
-
-// DELAY
-function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
-        
+const commentTable = document.getElementById("comments");        
 
 // OPEN CHOSEN WORK
 function viewUserWork(account, workID) {

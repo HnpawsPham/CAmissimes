@@ -249,8 +249,8 @@ async function TemperControl() {
                 }
 
                 nhietke.querySelector(".temperature").addEventListener("animationend", function () {
-                    nhietke.querySelector(".temperature").style.bottom = "200px"
-                    nhietke.querySelector(".thanhchay").style.height = "180px"
+                    nhietke.querySelector(".temperature").style.bottom = "180px"
+                    nhietke.querySelector(".thanhchay").style.height = "200px"
                 })
             }
         }
