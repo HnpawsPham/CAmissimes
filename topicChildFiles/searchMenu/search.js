@@ -189,19 +189,18 @@ function searchItem() {
 // HIỆN CÁC THÍ NGHIỆM THEO LỚP
 function visibleToList(grade) {
     for (let i in list) {
-        notFoundText.classList.add("hide")
         try {
             card[i].classList.add("hide")
         }
         catch { }
 
         if (list[i].grade == grade || list[i].grade == 0) {
-            console.log(card[i])
             card[i].classList.remove("hide")
             notFoundText.classList.add("hide")
         }
-        if (body.querySelectorAll(".hide").length == body.querySelectorAll(".col").length) {
-            notFoundText.classList.remove("hide")
+        console.log(body.querySelectorAll(".hide").length + " " + body.querySelectorAll(".col").length)
+        if (body.querySelectorAll(".hide").length  == body.querySelectorAll(".col").length) {
+            notFoundText.classList.remove("hide");
         }
     }
 }
