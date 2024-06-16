@@ -144,7 +144,6 @@ function loadAccounts() {
                     saveToStorage("allUserWork", allUserWork);
                     saveToStorage("accountList", accountList);
 
-                    alert("Please wait, press 'OK'");
                     delay(3000);
                     table.replaceChildren();
                     table.innerHTML = ` <tr>
@@ -179,6 +178,7 @@ function loadAccounts() {
                 accountList = await findData("accountList")
             );
 
+            alert("Please wait, press 'OK'");
             await delay(3000);
 
             if (accountList[accountID].role == 0) {
