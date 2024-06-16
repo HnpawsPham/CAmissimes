@@ -45,6 +45,8 @@ forgetPass.addEventListener("click", function(e){
     e.preventDefault();
 
     if(emailInput.value.trim().length != 0){
+        visibleNotice("Please wait");
+
         let check = accountList.filter((account) => account.email == emailInput.value);
 
         if(check.length > 0){
@@ -55,7 +57,7 @@ forgetPass.addEventListener("click", function(e){
 
             emailjs.send("service_m8mz1er", "template_alk8o0d", params)
             .then(function(res){
-                visibleNotice("  We sent your password on your email account, check it  ");
+                visibleNotice("&ensp;  We sent your password on your email account, check it  &ensp;");
             })
         }
         else{
