@@ -51,7 +51,7 @@ function loadItems(){
 
     for (let [i, info] of list.entries()) {
 
-        if (info.author.name != "HnpawsPham" && info.topic != topic) {
+        if (info.author.id != -1 && info.topic != topic) {
             continue;
         }
         else {
@@ -74,7 +74,19 @@ function loadItems(){
                 }
         
                 let author = document.createElement("u");
-                author.innerHTML = "By " + info.author.name;
+                
+                try{
+                    author.innerHTML = "By " + accountList[info.author.id].name;
+                }
+                catch{
+                    if(info.author.id == -1){
+                        author.innerHTML = "By HnpawsPham";
+                    }
+                    else{
+                        author.innerHTML = "By Anonymous";
+                    }
+                }
+                
                 card.appendChild(author);
         
                 let button = document.createElement("a")

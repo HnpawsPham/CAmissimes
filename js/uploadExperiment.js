@@ -170,7 +170,6 @@ submitBtn.addEventListener("click", function () {
                         grade: newWork.grade,
                         author: {
                             id: currentAccount.index,
-                            name: currentAccount.name,
                         },
                         link: htmlFile[0],
                         work_index_in_userList: currentAccount.work.length - 1,
