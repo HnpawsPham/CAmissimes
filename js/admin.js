@@ -42,7 +42,13 @@ function viewUserWork(account, workID) {
 }
 
 // VISIBLE ADMIN NAME
-adminName.innerHTML = "Admin: " + accountList[accountID].name;
+if(accountList[accountID].name != undefined){
+    adminName.innerHTML = "Admin: " + accountList[accountID].name;
+}
+else{
+    adminName.innerHTML = "Admin: Anonymous";
+}
+
 
 // LOAD ALL ACCOUNTS ON TABLE
 function loadAccounts() {
@@ -138,6 +144,7 @@ function loadAccounts() {
                     saveToStorage("allUserWork", allUserWork);
                     saveToStorage("accountList", accountList);
 
+                    alert("Please wait, press 'OK'");
                     delay(3000);
                     table.replaceChildren();
                     table.innerHTML = ` <tr>
