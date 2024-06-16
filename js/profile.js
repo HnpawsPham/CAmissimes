@@ -42,6 +42,12 @@ else{
 editUsername.addEventListener("click", function () {
     username.innerHTML = prompt("Type new name here:");
 
+    // CANNOT NAME THE SAME AS CREATOR
+    while(username.innerHTML == "HnpawsPham"){
+        alert("You can not name creator's name!");
+        username.innerHTML = prompt("Type new name here:");
+    }
+
     currentAccount["name"] = username.innerHTML;
     accountList[accountID] = currentAccount;
 
