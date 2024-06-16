@@ -253,6 +253,16 @@ function loadComments() {
             saveToStorage("accountList", accountList);
 
             commentTable.replaceChildren();
+
+            commentTable.innerHTML = `  <tr>
+                                            <th>Index</th>
+                                            <th>Email</th>
+                                            <th>Content</th>
+                                            <th>Date</th>
+                                            <th>Delete</th>
+                                            <th>Block user</th>
+                                        </tr>`
+
             loadComments();
         }
 
