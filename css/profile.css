@@ -58,6 +58,7 @@ h1{
     padding: 10px 20px;
 }
 .user-work-container{
+    cursor: pointer;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -67,6 +68,9 @@ h1{
     width: 300px;
     height: 200px;
     margin: 15px 0 15px 20px;
+}
+.user-work-container:hover{
+    filter: brightness(130%);
 }
 .user-work-container p,u{
     margin-top: 0px;

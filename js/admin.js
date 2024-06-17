@@ -93,8 +93,7 @@ function loadAccounts() {
                 card.style.display = "flex";
                 card.style.justifyContent = "space-evenly";
 
-                let name = document.createElement("p");
-                name.style.textDecoration = "underline";
+                let name = document.createElement("u");
                 name.style.width = "35%";
 
                 if (account.work[i].name.length < 10) {

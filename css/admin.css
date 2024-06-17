@@ -12,7 +12,12 @@ table td div{
     justify-content: space-evenly;
     align-items: center;
 }
-
+table u:hover{
+    color: rgb(255, 0, 0);
+}
+table input{
+    text-align: center;
+}
 h1{
     padding-left: 40px;
 }

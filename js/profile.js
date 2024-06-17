@@ -97,8 +97,37 @@ function loadData() {
                 img.style.objectFit = "contain";
             }
 
+            // OPEN CHOSEN EXPERIMENT
+            div.onclick = function(){
+                // OPEN NEW TAB
+                const newTab = window.open('', '_blank');
+            
+                newTab.document.open();
+                newTab.document.write(`${work.html}`);
+    
+                // LOAD IMAGES AND AUDIOS
+                let images = newTab.document.querySelectorAll("img");
+                let audios = newTab.document.querySelectorAll("audio");
+    
+                if (images.length > 0) {
+                    for (let image of images) {
+                        image.src = work.assets[`${image.src.split("/").pop()}`];
+                    }
+                }
+    
+                if (audios.length > 0) {
+                    for (let audio of audios) {
+                        audio.src = work.audios[`${audio.src.split("/").pop()}`];
+                    }
+                }
+    
+                newTab.document.close(); 
+            }
+
             div.appendChild(img);
 
+
+            // ADD INFO
             let name = document.createElement("p");
             name.innerHTML = work.name.toUpperCase();
             div.appendChild(name);
