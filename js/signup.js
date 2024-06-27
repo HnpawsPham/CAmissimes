@@ -39,7 +39,7 @@ form.addEventListener("submit", function (e) {
                     pass: passInput.value,
                     role: 0,
                     index: accountList.length,
-                    canComment: true
+                    isBlocked: false
                 })
 
                 saveToStorage("accountList", accountList);

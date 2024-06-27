@@ -12,7 +12,8 @@ let accountList = await findData("accountList");
 
 form.addEventListener("submit",function(e){
     if(isLoggedIn == true && isLoggedIn != null){
-        if(accountList[accountID].canComment){
+
+        if(!accountList[accountID].isBlocked){
             if(content.value.trim() != 0){
                 let date = new Date();
                 date = date.toLocaleDateString()
@@ -28,7 +29,7 @@ form.addEventListener("submit",function(e){
             }
         }
         else{
-            alert("You have been blocked for a violation!");
+            alert("You have been blocked!");
         }
     }
     else{

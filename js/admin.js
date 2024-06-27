@@ -130,6 +130,7 @@ function loadAccounts() {
                     saveToStorage("allUserWork", allUserWork);
                 })
 
+                // DELETE USER WORK 
                 let deleteBtn = document.createElement("button");
                 deleteBtn.style.width = "50%";
                 deleteBtn.style.height = "20%";
@@ -169,6 +170,7 @@ function loadAccounts() {
         role.max = 1;
         role.value = account.role;
 
+        // CHANGE USER ROLE
         role.addEventListener("change", async function () {
             account.role = role.value;
 
@@ -225,6 +227,7 @@ function loadComments() {
         td.appendChild(deleteBtn);
         tr.appendChild(td);
 
+        // DELETE COMMENTS
         deleteBtn.onclick = function () {
             commentList.splice(i, 1);
             saveToStorage("commentList", commentList);
@@ -236,7 +239,7 @@ function loadComments() {
 
         let blockUser = document.createElement("button");
 
-        if (accountList[comment.critic_index].canComment) {
+        if (!accountList[comment.critic_index].isBlocked) {
             blockUser.innerHTML = "Block this user";
         }
         else {
@@ -246,14 +249,15 @@ function loadComments() {
         td2.appendChild(blockUser);
         tr.appendChild(td2);
 
+        // BLOCK USER 
         blockUser.onclick = function () {
             if (blockUser.innerHTML == "Block this user") {
                 blockUser.innerHTML = "Unblock this user";
-                accountList[comment.critic_index].canComment = false;
+                accountList[comment.critic_index].isBlocked = true;
             }
             else {
                 blockUser.innerHTML = "Block this user";
-                accountList[comment.critic_index].canComment = true;
+                accountList[comment.critic_index].isBlocked = false;
             }
 
             saveToStorage("accountList", accountList);

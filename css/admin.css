@@ -21,3 +21,6 @@ table input{
 h1{
     padding-left: 40px;
 }
+#note ul{
+    list-style-type: "- ";
+}

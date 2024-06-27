@@ -97,12 +97,13 @@ async function loadFilesName(arr, field, type) {
             p.innerHTML = file.name.substring(0, 17) + "...";
         }
 
-
+        // CSS STYLE
         field.style.flexDirection = "column";
         field.style.justifyContent = "space-evenly";
         field.style.alignItems = "center";
         field.getElementsByTagName("p")[0].appendChild(p);
 
+        // GET BASE 64 FROM INPUTS
         if (field.id != "code") {
             getBase64(file, field.id);
         }
@@ -113,6 +114,7 @@ async function loadFilesName(arr, field, type) {
     }
 }
 
+// READ FILE AFTER INPUT FIELD CHANGED
 for (let field of fields) {
     field.addEventListener("change", function (e) {
         const fileList = e.target.files;
@@ -131,68 +133,77 @@ function reset() {
 
 }
 
+// CHECK IF UPLOAD INFO IS VALID
+function checkValidInfo(){
+    if (workNameInput.value.trim().length > 0) {
+        if (topicSelector.value != "topic" && gradeSelector.value != "grade") {
+            if (htmlFile != null && assets != {}) {
+                // SAVE TO DATABASE
+                let newWork = {
+                    name: workNameInput.value,
+                    topic: topicSelector.value,
+                    grade: gradeSelector.value,
+                    cover_img: coverImg,
+                    description: descriptionInput.value,
+                    html: htmlFile[0],
+                    assets: assets,
+                    audios: audios,
+                    isVerified: false,
+                    indexInAll: allUserWork.length,
+                }
+
+                try {
+                    currentAccount.work.push(newWork);
+                }
+                catch {
+                    currentAccount["work"] = [newWork];
+                }
+
+                reset();
+
+                accountList[accountID] = currentAccount;
+
+                allUserWork.push({
+                    title: newWork.name,
+                    topic: newWork.topic,
+                    desb: newWork.description,
+                    grade: newWork.grade,
+                    author: {
+                        id: currentAccount.index,
+                    },
+                    link: htmlFile[0],
+                    work_index_in_userList: currentAccount.work.length - 1,
+                    isVerified: newWork.isVerified
+                })
+
+                saveToStorage("accountList", accountList);
+                saveToStorage("allUserWork", allUserWork);
+
+                alert("Upload successfully");
+                return;
+
+            }
+            else {
+                alert("Invalid number of HTML files (Must be 1) or no assets founded");
+                return;
+            }
+        }
+    }
+    alert("Please fill all necessary information");
+}
+
 // SUBMIT AND POST EXPERIMENT TO STORAGE
 submitBtn.addEventListener("click", function () {
     if (isLoggedIn) {
-        // check valid info
-        if (workNameInput.value.trim().length > 0) {
-            if (topicSelector.value != "topic" && gradeSelector.value != "grade") {
-                if (htmlFile != null && assets != {}) {
-                    // SAVE TO DATABASE
-                    let newWork = {
-                        name: workNameInput.value,
-                        topic: topicSelector.value,
-                        grade: gradeSelector.value,
-                        cover_img: coverImg,
-                        description: descriptionInput.value,
-                        html: htmlFile[0],
-                        assets: assets,
-                        audios: audios,
-                        isVerified: false,
-                        indexInAll: allUserWork.length,
-                    }
-
-                    try {
-                        currentAccount.work.push(newWork);
-                    }
-                    catch {
-                        currentAccount["work"] = [newWork];
-                    }
-
-                    reset();
-
-                    accountList[accountID] = currentAccount;
-
-                    allUserWork.push({
-                        title: newWork.name,
-                        topic: newWork.topic,
-                        desb: newWork.description,
-                        grade: newWork.grade,
-                        author: {
-                            id: currentAccount.index,
-                        },
-                        link: htmlFile[0],
-                        work_index_in_userList: currentAccount.work.length - 1,
-                        isVerified: newWork.isVerified
-                    })
-
-                    saveToStorage("accountList", accountList);
-                    saveToStorage("allUserWork", allUserWork);
-
-                    alert("Upload successfully");
-                    return;
-
-                }
-                else {
-                    alert("Invalid number of HTML files (Must be 1) or no assets founded");
-                    return;
-                }
-            }
+        // check permission
+        if (!accountList[accountID].isBlocked) {
+            checkValidInfo();
         }
-
-        alert("Please fill all necessary information");
+        else{
+            alert("You have been blocked!");
+        }
     }
-    else{
+    else {
         alert("You must log in to upload");
     }
 
@@ -207,8 +218,8 @@ coverImgInput.addEventListener("change", function (e) {
 })
 
 // COPY EXAMPLE CODES
-for(let copyBtn of copyBtns){
-    copyBtn.addEventListener("click", function(){
+for (let copyBtn of copyBtns) {
+    copyBtn.addEventListener("click", function () {
         navigator.clipboard.writeText(copyBtn.parentElement.querySelector("pre").innerHTML);
 
         alert("Copied!");
