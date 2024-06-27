@@ -137,9 +137,9 @@ body{
   'GRAD' 0,
   'opsz' 24
 }
-/* ::selection{
+::selection{
     opacity: 0;
-} */
+}
 #text{
     max-height: 30vh;
     overflow-y: scroll;
