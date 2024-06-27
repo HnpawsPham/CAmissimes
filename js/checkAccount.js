@@ -31,4 +31,4 @@ function blockMobile() {
         location.reload()
     }
 }
-blockMobile()
+blockMobile();
