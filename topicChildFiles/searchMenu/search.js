@@ -44,8 +44,49 @@ allGrade.addEventListener("click", function () {
     }
 })
 
+// LOAD IMAGES AND AUDIOS
+function loadAssetsAudios(newTab, info){
+    let images = newTab.document.querySelectorAll("img");
+    let audios = newTab.document.querySelectorAll("audio");
+
+    if (images.length > 0) {
+        for (let image of images) {
+            image.src = accountList[info.author.id].work[info.work_index_in_userList].assets[`${image.src.split("/").pop()}`];
+        }
+    }
+
+    if (audios.length > 0) {
+        for (let audio of audios) {
+            audio.src = accountList[info.author.id].work[info.work_index_in_userList].audios[`${audio.src.split("/").pop()}`];
+        }
+    }
+}
+
+// LOAD EXPERIMENT ON NEW TAB
+function loadExperiment(button, info, i){
+    button.addEventListener("click", function () {
+        if(info.author.id != -1){
+            sessionStorage.setItem("viewingWorkID", (i - defaultListLength));
+
+            // OPEN NEW TAB
+            const newTab = window.open('', '_blank');
+
+            newTab.document.open();
+            newTab.document.write(`${info.html}`);
+
+            loadAssetsAudios(newTab, info);
+
+            newTab.document.close(); 
+        }
+        else{
+            window.open(info.html);
+        }
+    })
+}
+
 let sortType = () => {return true};
 
+// DISPLAY EXPERIMENTS 
 function loadItems(){
     body.replaceChildren();
 
@@ -64,7 +105,13 @@ function loadItems(){
                 card.appendChild(title)
         
                 let desc = document.createElement("p")
-                desc.innerHTML = info.desb;
+
+                if(info.desb.trim().length > 0){
+                    desc.innerHTML = info.desb;
+                }
+                else{
+                    desc.innerHTML = `<i style="opacity: 0.4;">No description.</i>`;   
+                }
                 card.appendChild(desc)
         
                 if (info.isVerified) {
@@ -90,47 +137,16 @@ function loadItems(){
                 card.appendChild(author);
         
                 let button = document.createElement("a")
-                button.innerHTML = "Xem ngay"
+                button.innerHTML = "Try now"
         
-                button.addEventListener("click", function () {
-                    if(info.author.id != -1){
-                        sessionStorage.setItem("viewingWorkID", (i - defaultListLength));
-        
-                        // OPEN NEW TAB
-                        const newTab = window.open('', '_blank');
-            
-                        newTab.document.open();
-                        newTab.document.write(`${info.link}`);
-            
-                        // LOAD IMAGES AND AUDIOS
-                        let images = newTab.document.querySelectorAll("img");
-                        let audios = newTab.document.querySelectorAll("audio");
-            
-                        if (images.length > 0) {
-                            for (let image of images) {
-                                image.src = accountList[info.author.id].work[info.work_index_in_userList].assets[`${image.src.split("/").pop()}`];
-                            }
-                        }
-            
-                        if (audios.length > 0) {
-                            for (let audio of audios) {
-                                audio.src = accountList[info.author.id].work[info.work_index_in_userList].audios[`${audio.src.split("/").pop()}`];
-                            }
-                        }
-            
-                        newTab.document.close(); 
-                    }
-                    else{
-                        window.open(info.link);
-                    }
-                })
+                loadExperiment(button, info, i);
         
                 card.appendChild(button)
                 body.appendChild(card)
             }
         }
     }
-
+    // CANT FIND 
     if(body.querySelectorAll(".col").length == 0){
         let p = document.createElement("p");
         p.id = "no-result";
@@ -140,15 +156,15 @@ function loadItems(){
 }
 loadItems(sortType);
 
-// bỏ dấu tiếng việt
+// ENHANCE SEARCHING
 function normalizeStr(str) {
     return str.normalize("NFD")
         .replace(/[\u0300-\u036f]/g, '')
         .replace(/đ/g, 'd').replace(/Đ/g, 'D')
         .toLowerCase()
 }
-// TÍNH NĂNG TÌM KIẾM
 
+// SEARCHING FEATURES
 search.addEventListener("keypress", function () {
     searchItem()
     document.querySelector("ul").style.opacity = "1"
@@ -198,7 +214,7 @@ function searchItem() {
 }
     
 
-// HIỆN CÁC THÍ NGHIỆM THEO LỚP
+// DISPLAY EXPERIMENTS ACCORDING TO CHOSEN GRADE
 function visibleToList(grade) {
     for (let i in list) {
         try {

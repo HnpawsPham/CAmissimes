@@ -37,7 +37,7 @@ button{
     border-radius: 20px;
     padding: 0px 20px;
 }
-a{
+button a{
     text-decoration: none;
     color: rgb(49, 63, 46);
     font-family: rocksalt;
@@ -79,6 +79,7 @@ h2{
     padding: 10px 30px;
 }
 #commentList{
+    box-shadow: inset 0 0 10px rgb(0, 0, 0);
     overflow-y: scroll;
     background-color: rgb(22, 18, 21);
     width: 50%;

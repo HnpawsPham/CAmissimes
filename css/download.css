@@ -35,3 +35,7 @@ ul img {
 #btn:hover{
     background-color: brown;
 }
+#home{
+    position: fixed;
+    margin: 5vh 50px;
+}

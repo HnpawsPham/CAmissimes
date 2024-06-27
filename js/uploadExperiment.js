@@ -171,7 +171,7 @@ function checkValidInfo(){
                     author: {
                         id: currentAccount.index,
                     },
-                    link: htmlFile[0],
+                    html: htmlFile[0],
                     work_index_in_userList: currentAccount.work.length - 1,
                     isVerified: newWork.isVerified
                 })
