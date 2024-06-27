@@ -42,13 +42,100 @@ function viewUserWork(account, workID) {
 }
 
 // VISIBLE ADMIN NAME
-if(accountList[accountID].name != undefined){
+if (accountList[accountID].name != undefined) {
     adminName.innerHTML = "Admin: " + accountList[accountID].name;
 }
-else{
+else {
     adminName.innerHTML = "Admin: Anonymous";
 }
 
+// VERIFY EXPERIMENT
+function verifyExperiment(checkbox, account, i){
+    checkbox.addEventListener("change", function () {
+        if (checkbox.checked) {
+            account.work[i]["isVerified"] = true;
+            console.log(allUserWork[account.work[i].indexInAll].isVerified)
+            allUserWork[account.work[i].indexInAll].isVerified = true;
+        }
+        else {
+            account.work[i]["isVerified"] = false;
+            allUserWork[account.work[i].indexInAll].isVerified = false;
+        }
+
+        saveToStorage("accountList", accountList);
+        saveToStorage("allUserWork", allUserWork);
+
+        alert("Verified!");
+    })
+}
+
+//DELETE USER WORK (EXPERIMENT)
+function deleteUserWork(deleteBtn, account, i){
+    deleteBtn.onclick = function () {
+        allUserWork.splice(account.work[i].indexInAll, 1);
+        account.work.splice(i, 1);
+
+        saveToStorage("allUserWork", allUserWork);
+        saveToStorage("accountList", accountList);
+
+        delay(3000);
+        table.replaceChildren();
+        table.innerHTML = ` <tr>
+                                <th>Index</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Password</th>
+                                <th>Worklist</th>
+                                <th>Role</th>
+                            </tr>`;
+        loadAccounts();
+    }
+}
+
+// LOAD ACCOUNT WORKS
+function loadAccountWorks(account, workList){
+    for (let i in account.work) {
+
+        let card = document.createElement("div");
+        card.style.display = "flex";
+        card.style.justifyContent = "space-evenly";
+
+        let name = document.createElement("u");
+        name.style.width = "35%";
+
+        if (account.work[i].name.length < 10) {
+            name.innerHTML = account.work[i].name;
+        }
+        else {
+            name.innerHTML = account.work[i].name.substring(0, 7) + "...";
+        }
+
+        name.style.cursor = "pointer";
+        card.appendChild(name);
+
+        name.addEventListener("click", function () {
+            viewUserWork(account, i);
+        })
+
+        let checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = account.work[i].isVerified;
+        card.appendChild(checkbox);
+
+        verifyExperiment(checkbox, account, i);
+
+        // DELETE USER WORK 
+        let deleteBtn = document.createElement("button");
+        deleteBtn.style.width = "50%";
+        deleteBtn.style.height = "20%";
+        deleteBtn.innerHTML = "Delete experiment";
+        card.appendChild(deleteBtn);
+
+        deleteUserWork(deleteBtn, account, i);
+
+        workList.appendChild(card);
+    }
+}
 
 // LOAD ALL ACCOUNTS ON TABLE
 function loadAccounts() {
@@ -87,78 +174,8 @@ function loadAccounts() {
             tr.appendChild(none);
         }
         else {
-            for (let i in account.work) {
+            loadAccountWorks(account, workList); // load user worklist
 
-                let card = document.createElement("div");
-                card.style.display = "flex";
-                card.style.justifyContent = "space-evenly";
-
-                let name = document.createElement("u");
-                name.style.width = "35%";
-
-                if (account.work[i].name.length < 10) {
-                    name.innerHTML = account.work[i].name;
-                }
-                else {
-                    name.innerHTML = account.work[i].name.substring(0, 7) + "...";
-                }
-
-                name.style.cursor = "pointer";
-                card.appendChild(name);
-
-                name.addEventListener("click", function () {
-                    viewUserWork(account, i);
-                })
-
-                let checkbox = document.createElement("input");
-                checkbox.type = "checkbox";
-                checkbox.checked = account.work[i].isVerified;
-                card.appendChild(checkbox);
-
-                checkbox.addEventListener("change", function () {
-                    if (checkbox.checked) {
-                        account.work[i]["isVerified"] = true;
-                        console.log(allUserWork[account.work[i].indexInAll].isVerified)
-                        allUserWork[account.work[i].indexInAll].isVerified = true;
-                    }
-                    else {
-                        account.work[i]["isVerified"] = false;
-                        allUserWork[account.work[i].indexInAll].isVerified = false;
-                    }
-
-                    saveToStorage("accountList", accountList);
-                    saveToStorage("allUserWork", allUserWork);
-                })
-
-                // DELETE USER WORK 
-                let deleteBtn = document.createElement("button");
-                deleteBtn.style.width = "50%";
-                deleteBtn.style.height = "20%";
-                deleteBtn.innerHTML = "Delete experiment";
-                card.appendChild(deleteBtn);
-
-                deleteBtn.onclick = function () {
-                    allUserWork.splice(account.work[i].indexInAll, 1);
-                    account.work.splice(i, 1);
-
-                    saveToStorage("allUserWork", allUserWork);
-                    saveToStorage("accountList", accountList);
-
-                    delay(3000);
-                    table.replaceChildren();
-                    table.innerHTML = ` <tr>
-                                            <th>Index</th>
-                                            <th>Username</th>
-                                            <th>Email</th>
-                                            <th>Password</th>
-                                            <th>Worklist</th>
-                                            <th>Role</th>
-                                        </tr>`;
-                    loadAccounts();
-                }
-
-                workList.appendChild(card);
-            }
             tr.appendChild(workList);
         }
 
@@ -199,6 +216,45 @@ function loadAccounts() {
 }
 loadAccounts();
 
+// BLOCK USER
+function blockUser(comment, btn) {
+    btn.onclick = function () {
+        if (btn.innerHTML == "Block this user") {
+            btn.innerHTML = "Unblock this user";
+            accountList[comment.critic_index].isBlocked = true;
+        }
+        else {
+            btn.innerHTML = "Block this user";
+            accountList[comment.critic_index].isBlocked = false;
+        }
+
+        saveToStorage("accountList", accountList);
+
+        commentTable.replaceChildren();
+
+        commentTable.innerHTML = `  <tr>
+                                    <th>Index</th>
+                                    <th>Email</th>
+                                    <th>Content</th>
+                                    <th>Date</th>
+                                    <th>Delete</th>
+                                    <th>Block user</th>
+                                </tr>`;
+
+        loadComments();
+    }
+}
+
+// DELETE COMMENT
+function deleteComment(deleteBtn, i){
+    deleteBtn.onclick = function () {
+        commentList.splice(i, 1);
+        saveToStorage("commentList", commentList);
+
+        location.reload();
+    }
+}
+
 // COMMENTS LIST
 function loadComments() {
     for (let [i, comment] of commentList.entries()) {
@@ -227,54 +283,23 @@ function loadComments() {
         td.appendChild(deleteBtn);
         tr.appendChild(td);
 
-        // DELETE COMMENTS
-        deleteBtn.onclick = function () {
-            commentList.splice(i, 1);
-            saveToStorage("commentList", commentList);
-
-            location.reload();
-        }
+        deleteComment(deleteBtn, i);
 
         let td2 = document.createElement("td");
 
-        let blockUser = document.createElement("button");
+        let blockUserBtn = document.createElement("button");
 
         if (!accountList[comment.critic_index].isBlocked) {
-            blockUser.innerHTML = "Block this user";
+            blockUserBtn.innerHTML = "Block this user";
         }
         else {
-            blockUser.innerHTML = "Unblock this user";
+            blockUserBtn.innerHTML = "Unblock this user";
         }
 
-        td2.appendChild(blockUser);
+        blockUser(comment, blockUserBtn);
+
+        td2.appendChild(blockUserBtn);
         tr.appendChild(td2);
-
-        // BLOCK USER 
-        blockUser.onclick = function () {
-            if (blockUser.innerHTML == "Block this user") {
-                blockUser.innerHTML = "Unblock this user";
-                accountList[comment.critic_index].isBlocked = true;
-            }
-            else {
-                blockUser.innerHTML = "Block this user";
-                accountList[comment.critic_index].isBlocked = false;
-            }
-
-            saveToStorage("accountList", accountList);
-
-            commentTable.replaceChildren();
-
-            commentTable.innerHTML = `  <tr>
-                                            <th>Index</th>
-                                            <th>Email</th>
-                                            <th>Content</th>
-                                            <th>Date</th>
-                                            <th>Delete</th>
-                                            <th>Block user</th>
-                                        </tr>`
-
-            loadComments();
-        }
 
         commentTable.appendChild(tr);
     }

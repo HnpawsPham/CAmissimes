@@ -74,7 +74,36 @@ uploadExperiment.addEventListener("click", function () {
     window.location.href = "./uploadExperiment.html";
 })
 
-// LOAD USER WORK NEWEST
+// OPEN CHOSEN EXPERIMENT
+function loadExperiment(div, work){
+    div.onclick = function(){
+        // OPEN NEW TAB
+        const newTab = window.open('', '_blank');
+    
+        newTab.document.open();
+        newTab.document.write(`${work.html}`);
+
+        // LOAD IMAGES AND AUDIOS
+        let images = newTab.document.querySelectorAll("img");
+        let audios = newTab.document.querySelectorAll("audio");
+
+        if (images.length > 0) {
+            for (let image of images) {
+                image.src = work.assets[`${image.src.split("/").pop()}`];
+            }
+        }
+
+        if (audios.length > 0) {
+            for (let audio of audios) {
+                audio.src = work.audios[`${audio.src.split("/").pop()}`];
+            }
+        }
+
+        newTab.document.close(); 
+    }
+}
+
+// LOAD USER WORK NEWEST (DEFAULT)
 function loadData() {
     if (userWorkList.length > 0) {
         for (let work of userWorkList) {
@@ -97,32 +126,7 @@ function loadData() {
                 img.style.objectFit = "contain";
             }
 
-            // OPEN CHOSEN EXPERIMENT
-            div.onclick = function(){
-                // OPEN NEW TAB
-                const newTab = window.open('', '_blank');
-            
-                newTab.document.open();
-                newTab.document.write(`${work.html}`);
-    
-                // LOAD IMAGES AND AUDIOS
-                let images = newTab.document.querySelectorAll("img");
-                let audios = newTab.document.querySelectorAll("audio");
-    
-                if (images.length > 0) {
-                    for (let image of images) {
-                        image.src = work.assets[`${image.src.split("/").pop()}`];
-                    }
-                }
-    
-                if (audios.length > 0) {
-                    for (let audio of audios) {
-                        audio.src = work.audios[`${audio.src.split("/").pop()}`];
-                    }
-                }
-    
-                newTab.document.close(); 
-            }
+            loadExperiment(div, work);
 
             div.appendChild(img);
 

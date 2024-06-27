@@ -40,7 +40,7 @@ form.addEventListener("submit",function(e){
     }
 })
 
-// RECOVER PASSWORD
+// RECOVER PASSWORD BY EMAIL JS
 forgetPass.addEventListener("click", function(e){
     e.preventDefault();
 
