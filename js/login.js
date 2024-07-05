@@ -51,7 +51,8 @@ forgetPass.addEventListener("click", function(e){
 
         if(check.length > 0){
             let params = {
-                from_email: emailInput.value,
+                from_name: "CAmissimes",
+                to_email : emailInput.value,
                 email_password: check[0].pass
             }
 
