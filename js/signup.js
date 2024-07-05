@@ -46,8 +46,10 @@ form.addEventListener("submit", function (e) {
 
                 visibleNotice("Create new account succesfully");
 
-                sleep(5000);
-                window.location.href = "../pages/login.html";
+                setTimeout(function(){
+                    window.location.href = "../pages/login.html";
+                }, 1000)
+                
             }
             else {
                 visibleNotice("Please check your confirm password again");

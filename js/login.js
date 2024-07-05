@@ -58,7 +58,7 @@ forgetPass.addEventListener("click", function(e){
 
             emailjs.send("service_m8mz1er", "template_alk8o0d", params)
             .then(function(res){
-                visibleNotice("&ensp;  We sent your password on your email account, check it  &ensp;");
+                visibleNotice("&ensp;  We sent your password on your email account &ensp;");
             })
         }
         else{
