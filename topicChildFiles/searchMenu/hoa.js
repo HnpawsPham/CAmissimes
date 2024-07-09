@@ -8,7 +8,7 @@ let list = [
             id: -1,
             name: "HnpawsPham",
         },
-        link: "./ppTach/menu.html",
+        html: "./ppTach/menu.html",
         isVerified: true
     },
     {
@@ -19,7 +19,7 @@ let list = [
             id: -1,
             name: "HnpawsPham",
         },
-        link: "./tinh_chat_hoa_hoc/menu.html",
+        html: "./tinh_chat_hoa_hoc/menu.html",
         isVerified: false
     },
     {
@@ -30,7 +30,7 @@ let list = [
             id: -1,
             name: "HnpawsPham",
         },
-        link: "../hoa_hoc/natri&nuoc/natri&nuoc.html",
+        html: "../hoa_hoc/natri&nuoc/natri&nuoc.html",
         isVerified: true
     },
     {
@@ -41,7 +41,7 @@ let list = [
             id: -1,
             name: "HnpawsPham",
         },
-        link: "../hoa_hoc/cac-the-cua-chat/cac-the-cua-chat.html",
+        html: "../hoa_hoc/cac-the-cua-chat/cac-the-cua-chat.html",
         isVerified: true
     },
     {
@@ -52,7 +52,7 @@ let list = [
             id: -1,
             name: "HnpawsPham",
         },
-        link: "../hoa_hoc/ppTach/coCan.html",
+        html: "../hoa_hoc/ppTach/coCan.html",
         isVerified: true
     },
     {
@@ -63,7 +63,7 @@ let list = [
             id: -1,
             name: "HnpawsPham",
         },
-        link: "../hoa_hoc/ppTach/ppChiet.html",
+        html: "../hoa_hoc/ppTach/ppChiet.html",
         isVerified: true
     },
     {
@@ -74,7 +74,7 @@ let list = [
             id: -1,
             name: "HnpawsPham",
         },
-        link: "../hoa_hoc/ppTach/ppLoc.html",
+        html: "../hoa_hoc/ppTach/ppLoc.html",
         isVerified: true
     },
     {
@@ -85,7 +85,7 @@ let list = [
             id: -1,
             name: "HnpawsPham",
         },
-        link: "../hoa_hoc/tinh_chat_hoa_hoc/base.html",
+        html: "../hoa_hoc/tinh_chat_hoa_hoc/base.html",
         isVerified: true
     },
     {
@@ -96,7 +96,7 @@ let list = [
             id: -1,
             name: "HnpawsPham",
         },
-        link: "../hoa_hoc/tinh_chat_hoa_hoc/muoi.html",
+        html: "../hoa_hoc/tinh_chat_hoa_hoc/muoi.html",
         isVerified: false
     },
 ]
