@@ -8,7 +8,7 @@ let list=[
             id: -1,
             name: "HnpawsPham",
         },
-        link:"./nhiet-luong_&_ho-hap-te-bao.html",
+        html:"./nhiet-luong_&_ho-hap-te-bao.html",
         isVerified: true
     },
     {
@@ -19,7 +19,7 @@ let list=[
             id: -1,
             name: "HnpawsPham",
         },
-        link:"./chung-minh-than-van-chuyen-nuoc.html",
+        html:"./chung-minh-than-van-chuyen-nuoc.html",
         isVerified: true
     },
     {
@@ -30,7 +30,7 @@ let list=[
             id: -1,
             name: "HnpawsPham",
         },
-        link:"./chung-minh-quang-hop-o-cay-xanh.html",
+        html:"./chung-minh-quang-hop-o-cay-xanh.html",
         isVerified: true
     },
     {
@@ -41,7 +41,7 @@ let list=[
             id: -1,
             name: "HnpawsPham",
         },
-        link:"",
+        html:"",
         isVerified: false
     },
     {
@@ -52,7 +52,7 @@ let list=[
             id: -1,
             name: "HnpawsPham",
         },
-        link:"./thuoc_la/thuocla.html",
+        html:"./thuoc_la/thuocla.html",
         isVerified: true
     },
     {
@@ -63,7 +63,7 @@ let list=[
             id: -1,
             name: "HnpawsPham",
         },
-        link:"./tuan-hoan-mau.html",
+        html:"./tuan-hoan-mau.html",
         isVerified: true
     },
 ]

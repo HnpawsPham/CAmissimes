@@ -8,7 +8,7 @@ let list=[
             id: -1,
             name: "HnpawsPham",
         },
-        link:"./hien-tuong-nhiem-dien-do-co-xat.html",
+        html:"./hien-tuong-nhiem-dien-do-co-xat.html",
         isVerified: true
     },
     {
@@ -19,7 +19,7 @@ let list=[
             id: -1,
             name: "HnpawsPham",
         },
-        link:"./doi-luu-cua-chat-long.html",
+        html:"./doi-luu-cua-chat-long.html",
         isVerified: true
     },
     {
@@ -30,7 +30,7 @@ let list=[
             id: -1,
             name: "HnpawsPham",
         },
-        link:"./khuc-xa-anh-sang.html",
+        html:"./khuc-xa-anh-sang.html",
         isVerified: false
     },
     {
@@ -41,7 +41,7 @@ let list=[
             id: -1,
             name: "HnpawsPham",
         },
-        link:"./su-no-vi-nhiet-cua-chat-long.html",
+        html:"./su-no-vi-nhiet-cua-chat-long.html",
         isVerified: true
     },
 ]
